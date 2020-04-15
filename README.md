@@ -11,6 +11,9 @@
 ## Commands
 * Yet to be defined
 
+## Permissions
+* headhunting.mob_head_drops - This will stop heads from dropping for that player
+
 ## Releases
 * [Download](https://github.com/StevenRafferty/HeadHunting/releases)
 
