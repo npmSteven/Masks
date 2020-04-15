@@ -1,0 +1,15 @@
+options:
+  mob_head_drop_probability:
+    BLAZE: 0
+    CHICKEN: 50
+    COW: 50
+    CREEPER: 50
+    ENDERMAN: 50
+    GHAST: 50
+    IRON_GOLEM: 0
+    PIG: 50
+    SHEEP: 50
+    MUSHROOM_COW: 50
+    SKELETON: 50
+    SPIDER: 50
+    ZOMBIE: 50
