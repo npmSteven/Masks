@@ -1,0 +1,5 @@
+name: HeadHunting
+author: "Steven Rafferty"
+version: 1.0
+description: A plugin that enables you to collect mob heads to obtain masks
+main: net.stevenrafferty.headhunting.Main
