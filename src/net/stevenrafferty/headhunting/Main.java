@@ -1,20 +1,33 @@
 package net.stevenrafferty.headhunting;
 
 import net.stevenrafferty.headhunting.events.MobHeadDrop;
+import net.stevenrafferty.headhunting.utils.Database;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.sql.SQLException;
 
 public class Main extends JavaPlugin {
 
   public void onEnable() {
     getServer().getPluginManager().registerEvents(new MobHeadDrop(), this);
 
-    getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "HeadHunting has been Enabled");
+    getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "HeadHunting: Enabled");
     loadConfig();
+
+    // Connect to db
+    Database database = new Database();
+    try {
+      database.connect();
+    } catch (ClassNotFoundException error) {
+      error.printStackTrace();
+    } catch (SQLException error) {
+      error.printStackTrace();
+    }
   }
 
   public void onDisable() {
-    getServer().getConsoleSender().sendMessage(ChatColor.RED + "HeadHunting has been Disabled");
+    getServer().getConsoleSender().sendMessage(ChatColor.RED + "HeadHunting: Disabled");
   }
 
   public void loadConfig() {

@@ -13,3 +13,10 @@ options:
     SKELETON: 50
     SPIDER: 50
     ZOMBIE: 50
+database:
+  host: "localhost"
+  port: 3306
+  database: ""
+  username: ""
+  password: ""
+  table: ""
