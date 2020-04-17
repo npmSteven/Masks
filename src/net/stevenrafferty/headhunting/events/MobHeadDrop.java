@@ -17,6 +17,7 @@ import java.util.Random;
 public class MobHeadDrop implements Listener {
 
   Plugin plugin = Main.getPlugin(Main.class);
+  String mob_head_drops = plugin.getConfig().getString("permissions.mob_head_drops");
 
   MobHeads mobHeads = new MobHeads();
 
@@ -27,8 +28,7 @@ public class MobHeadDrop implements Listener {
       Creature killed = (Creature) event.getEntity();
       if (killed.getKiller() instanceof Player) {
         Player player = killed.getKiller();
-        if (player.hasPermission("headhunting.mob_head_drops")) {
-          // Chance to drop
+        if (player.hasPermission(mob_head_drops)) {
           if (shouldDropMobHead(killed.getType())) {
             if ((killed.isDead() || killed.getHealth() <= 0) && mobHeads.isType(killed.getType())) {
               String type = mobHeads.getOwnerOfType(killed.getType());
@@ -38,7 +38,6 @@ public class MobHeadDrop implements Listener {
               skullMeta.setDisplayName(ChatColor.GREEN + killed.getName() + "'s Head");
               skull.setItemMeta(skullMeta);
               event.getDrops().add(skull);
-              player.sendMessage("You killed " + killed.getName());
             }
           }
         }
@@ -47,7 +46,7 @@ public class MobHeadDrop implements Listener {
   }
 
   public boolean shouldDropMobHead(EntityType type) {
-    int probability = plugin.getConfig().getInt("options.mob_head_drop_probability." + type.toString().toUpperCase());
+    int probability = plugin.getConfig().getInt("creatures." + type.toString().toLowerCase() + ".head_drop_probability");
     Random r = new Random();
     int low = 1;
     int high = 100;
