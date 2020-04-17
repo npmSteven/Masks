@@ -1,18 +1,144 @@
-options:
-  mob_head_drop_probability:
-    BLAZE: 0
-    CHICKEN: 50
-    COW: 50
-    CREEPER: 50
-    ENDERMAN: 50
-    GHAST: 50
-    IRON_GOLEM: 0
-    PIG: 50
-    SHEEP: 50
-    MUSHROOM_COW: 50
-    SKELETON: 50
-    SPIDER: 50
-    ZOMBIE: 50
+creatures:
+  cow:
+    head_drop_probability: 100
+    token:
+      name: "Cow Token"
+      heads: 400
+      xp: 25
+      player_kills: 1
+    masks:
+      tier_1:
+        name: "Cow Mask"
+        lore: "Tier 1"
+        tokens: 1
+        money: 100 m0
+      tier_2:
+        name: "Cow Mask"
+        lore: "Tier 2"
+        tokens: 2
+        money: 2000
+      tier_3:
+        name: "Cow Mask"
+        lore: "Tier 3"
+        tokens: 3
+        money: 3000
+  pig:
+    head_drop_probability: 100
+    token:
+      name: "Pig Token"
+      heads: 400
+      xp: 25
+      player_kills: 1
+    masks:
+      tier_1:
+        name: "Pig Mask"
+        lore: "Tier 1"
+        tokens: 1
+        money: 1000
+      tier_2:
+        name: "Pig Mask"
+        lore: "Tier 2"
+        tokens: 2
+        money: 2000
+      tier_3:
+        name: "Pig Mask"
+        lore: "Tier 3"
+        tokens: 3
+        money: 3000
+  iron_golem:
+    head_drop_probability: 100
+    token:
+      name: "Iron Golem Token"
+      heads: 400
+      xp: 25
+      player_kills: 1
+    masks:
+      tier_1:
+        name: "Iron Golem Mask"
+        lore: "Tier 1"
+        tokens: 1
+        money: 1000
+      tier_2:
+        name: "Iron Golem Mask"
+        lore: "Tier 2"
+        tokens: 2
+        money: 2000
+      tier_3:
+        name: "Iron Golem Mask"
+        lore: "Tier 3"
+        tokens: 3
+        money: 3000
+  skeleton:
+    head_drop_probability: 100
+    token:
+      name: "Skeleton Token"
+      heads: 400
+      xp: 25
+      player_kills: 1
+    masks:
+      tier_1:
+        name: "Skeleton Mask"
+        lore: "Tier 1"
+        tokens: 1
+        money: 1000
+      tier_2:
+        name: "Skeleton Mask"
+        lore: "Tier 2"
+        tokens: 2
+        money: 2000
+      tier_3:
+        name: "Skeleton Mask"
+        lore: "Tier 3"
+        tokens: 3
+        money: 3000
+  zombie:
+    head_drop_probability: 100
+    token:
+      name: "Zombie Token"
+      heads: 400
+      xp: 25
+      player_kills: 1
+    masks:
+      tier_1:
+        name: "Zombie Mask"
+        lore: "Tier 1"
+        tokens: 1
+        money: 1000
+      tier_2:
+        name: "Zombie Mask"
+        lore: "Tier 2"
+        tokens: 2
+        money: 2000
+      tier_3:
+        name: "Zombie Mask"
+        lore: "Tier 3"
+        tokens: 3
+        money: 3000
+  blaze:
+    head_drop_probability: 100
+    token:
+      name: "Blaze Token"
+      heads: 400
+      xp: 25
+      player_kills: 1
+    masks:
+      tier_1:
+        name: "Blaze Mask"
+        lore: "Tier 1"
+        tokens: 1
+        money: 1000
+      tier_2:
+        name: "Blaze Mask"
+        lore: "Tier 2"
+        tokens: 2
+        money: 2000
+      tier_3:
+        name: "Blaze Mask"
+        lore: "Tier 3"
+        tokens: 3
+        money: 3000
+permissions:
+  mob_head_drops: "headhunting.mob_head_drops"
 database:
   host: "localhost"
   port: 3306
