@@ -1,6 +1,7 @@
 package net.stevenrafferty.headhunting.events;
 
 import net.stevenrafferty.headhunting.Main;
+import net.stevenrafferty.headhunting.utils.ItemStacks;
 import net.stevenrafferty.headhunting.utils.MobHeads;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -21,6 +22,8 @@ public class MobHeadDrop implements Listener {
 
   MobHeads mobHeads = new MobHeads();
 
+  ItemStacks itemStacks = new ItemStacks();
+
   // Check if entity is dead and if so we will drop a head
   @EventHandler
   public void onEntityDeath(EntityDeathEvent event) {
@@ -32,11 +35,7 @@ public class MobHeadDrop implements Listener {
           if (shouldDropMobHead(killed.getType())) {
             if ((killed.isDead() || killed.getHealth() <= 0) && mobHeads.isType(killed.getType())) {
               String type = mobHeads.getOwnerOfType(killed.getType());
-              ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
-              SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
-              skullMeta.setOwner(type);
-              skullMeta.setDisplayName(ChatColor.GREEN + killed.getName() + "'s Head");
-              skull.setItemMeta(skullMeta);
+              ItemStack skull = itemStacks.skullItemStack(type, killed);
               event.getDrops().add(skull);
             }
           }

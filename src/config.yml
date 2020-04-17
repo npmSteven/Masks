@@ -139,6 +139,12 @@ creatures:
         money: 3000
 permissions:
   mob_head_drops: "headhunting.mob_head_drops"
+  redeem: "headhunting.redeem"
+messages:
+  no_permissions_message: "No permissions"
+  no_console_command_message: "Console can not execute this command"
+options:
+  token_inventory_name: "Tokens"
 database:
   host: "localhost"
   port: 3306
