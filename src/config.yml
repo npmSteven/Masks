@@ -1,6 +1,7 @@
 creatures:
   cow:
     name: "Cow"
+    head: "MHF_Cow"
     head_drop_probability: 100
     token:
       name: "Cow Token"
@@ -29,6 +30,7 @@ creatures:
         money: 3000
   pig:
     name: "Pig"
+    head: "MHF_Pig"
     head_drop_probability: 100
     token:
       name: "Pig Token"
@@ -57,6 +59,7 @@ creatures:
         money: 3000
   iron_golem:
     name: "Iron Golem"
+    head: "MHF_Golem"
     head_drop_probability: 100
     token:
       name: "Iron Golem Token"
@@ -85,6 +88,7 @@ creatures:
         money: 3000
   skeleton:
     name: "Skeleton"
+    head: "MHF_Skeleton"
     head_drop_probability: 100
     token:
       name: "Skeleton Token"
@@ -113,6 +117,7 @@ creatures:
         money: 3000
   zombie:
     name: "Zombie"
+    head: "MHF_Zombie"
     head_drop_probability: 100
     token:
       name: "Zombie Token"
@@ -141,6 +146,7 @@ creatures:
         money: 3000
   blaze:
     name: "Blaze"
+    head: "MHF_Blaze"
     head_drop_probability: 100
     token:
       name: "Blaze Token"

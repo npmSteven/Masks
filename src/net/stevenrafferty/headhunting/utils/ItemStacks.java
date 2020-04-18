@@ -3,6 +3,7 @@ package net.stevenrafferty.headhunting.utils;
 import net.stevenrafferty.headhunting.Main;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.SkullType;
 import org.bukkit.entity.Creature;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;

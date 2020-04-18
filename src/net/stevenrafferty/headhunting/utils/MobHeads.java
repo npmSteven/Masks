@@ -1,54 +1,27 @@
 package net.stevenrafferty.headhunting.utils;
 
+import net.stevenrafferty.headhunting.Main;
 import org.bukkit.entity.EntityType;
+import org.bukkit.plugin.Plugin;
+
+import java.util.Set;
 
 public class MobHeads {
 
-  public boolean isType(EntityType type) {
-    boolean toReturn = false;
-    switch (type) {
-      case BLAZE:
-      case COW:
-      case IRON_GOLEM:
-      case PIG:
-      case SKELETON:
-      case ZOMBIE: {
-        toReturn = true;
-        break;
-      }
-    }
-    return toReturn;
-  }
+  private Plugin plugin = Main.getPlugin(Main.class);
 
-  public String getOwnerOfType(EntityType type) {
-    String toReturn = null;
-    switch (type) {
-      case BLAZE: {
-        toReturn = "MHF_Blaze";
-        break;
-      }
-      case COW: {
-        toReturn = "MHF_Cow";
-        break;
-      }
-      case IRON_GOLEM: {
-        toReturn = "MHF_Golem";
-        break;
-      }
-      case PIG: {
-        toReturn = "MHF_Pig";
-        break;
-      }
-      case SKELETON: {
-        toReturn = "MHF_Skeleton";
-        break;
-      }
-      case ZOMBIE: {
-        toReturn = "MHF_Zombie";
+  public boolean isValid(String name) {
+    Set creatures = plugin.getConfig().getConfigurationSection("creatures.").getKeys(false);
+    boolean hasType = false;
+    for (Object key : creatures) {
+      String creature = key.toString().toLowerCase();
+      name = name.toLowerCase();
+      if (name.equals(creature)) {
+        hasType = true;
         break;
       }
     }
-    return toReturn;
+    return hasType;
   }
 
 }
