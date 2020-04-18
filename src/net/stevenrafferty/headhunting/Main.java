@@ -23,14 +23,14 @@ public class Main extends JavaPlugin {
     loadConfig();
 
     // Connect to db
-    Database database = new Database();
-    try {
-      database.connect();
-    } catch (ClassNotFoundException error) {
-      error.printStackTrace();
-    } catch (SQLException error) {
-      error.printStackTrace();
-    }
+//    Database database = new Database();
+//    try {
+//      database.connect();
+//    } catch (ClassNotFoundException error) {
+//      error.printStackTrace();
+//    } catch (SQLException error) {
+//      error.printStackTrace();
+//    }
   }
 
   public void onDisable() {

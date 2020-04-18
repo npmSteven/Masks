@@ -1,140 +1,151 @@
 creatures:
   cow:
+    name: "Cow"
     head_drop_probability: 100
     token:
       name: "Cow Token"
-      heads: 400
-      xp: 25
-      player_kills: 1
+      heads_text: "Heads Required: "
+      heads_required: 400
+      xp_text: "XP Required: "
+      xp_required: 25
+      player_kills_text: "Kills Required: "
+      player_kills_required: 1
     masks:
+      name: "Cow Mask"
       tier_1:
-        name: "Cow Mask"
-        lore: "Tier 1"
+        name: "Tier 1"
         tokens: 1
-        money: 100 m0
+        money: 100
       tier_2:
-        name: "Cow Mask"
-        lore: "Tier 2"
+        name: "Tier 2"
         tokens: 2
         money: 2000
       tier_3:
-        name: "Cow Mask"
-        lore: "Tier 3"
+        name: "Tier 3"
         tokens: 3
         money: 3000
   pig:
+    name: "Pig"
     head_drop_probability: 100
     token:
-      name: "Pig Token"
-      heads: 400
-      xp: 25
-      player_kills: 1
+      heads_text: "Heads Required: "
+      heads_required: 400
+      xp_text: "XP Required: "
+      xp_required: 25
+      player_kills_text: "Kills Required: "
+      player_kills_required: 1
     masks:
+      name: "Pig Mask"
       tier_1:
-        name: "Pig Mask"
-        lore: "Tier 1"
+        name: "Tier 1"
         tokens: 1
         money: 1000
       tier_2:
-        name: "Pig Mask"
-        lore: "Tier 2"
+        name: "Tier 2"
         tokens: 2
         money: 2000
       tier_3:
-        name: "Pig Mask"
-        lore: "Tier 3"
+        name: "Tier 3"
         tokens: 3
         money: 3000
   iron_golem:
+    name: "Iron Golem"
     head_drop_probability: 100
     token:
       name: "Iron Golem Token"
-      heads: 400
-      xp: 25
-      player_kills: 1
+      heads_text: "Heads Required: "
+      heads_required: 400
+      xp_text: "XP Required: "
+      xp_required: 25
+      player_kills_text: "Kills Required: "
+      player_kills_required: 1
     masks:
+      name: "Iron Golem Mask"
       tier_1:
-        name: "Iron Golem Mask"
-        lore: "Tier 1"
+        name: "Tier 1"
         tokens: 1
         money: 1000
       tier_2:
-        name: "Iron Golem Mask"
-        lore: "Tier 2"
+        name: "Tier 2"
         tokens: 2
         money: 2000
       tier_3:
-        name: "Iron Golem Mask"
-        lore: "Tier 3"
+        name: "Tier 3"
         tokens: 3
         money: 3000
   skeleton:
+    name: "Skeleton"
     head_drop_probability: 100
     token:
       name: "Skeleton Token"
-      heads: 400
-      xp: 25
-      player_kills: 1
+      heads_text: "Heads Required: "
+      heads_required: 400
+      xp_text: "XP Required: "
+      xp_required: 25
+      player_kills_text: "Kills Required: "
+      player_kills_required: 1
     masks:
+      name: "Skeleton Mask"
       tier_1:
-        name: "Skeleton Mask"
-        lore: "Tier 1"
+        name: "Tier 1"
         tokens: 1
         money: 1000
       tier_2:
-        name: "Skeleton Mask"
-        lore: "Tier 2"
+        name: "Tier 2"
         tokens: 2
         money: 2000
       tier_3:
-        name: "Skeleton Mask"
-        lore: "Tier 3"
+        name: "Tier 3"
         tokens: 3
         money: 3000
   zombie:
+    name: "Zombie"
     head_drop_probability: 100
     token:
       name: "Zombie Token"
-      heads: 400
-      xp: 25
-      player_kills: 1
+      heads_text: "Heads Required: "
+      heads_required: 400
+      xp_text: "XP Required: "
+      xp_required: 25
+      player_kills_text: "Kills Required: "
+      player_kills_required: 1
     masks:
+      name: "Zombie Mask"
       tier_1:
-        name: "Zombie Mask"
-        lore: "Tier 1"
+        name: "Tier 1"
         tokens: 1
         money: 1000
       tier_2:
-        name: "Zombie Mask"
-        lore: "Tier 2"
+        name: "Tier 2"
         tokens: 2
         money: 2000
       tier_3:
-        name: "Zombie Mask"
-        lore: "Tier 3"
+        name: "Tier 3"
         tokens: 3
         money: 3000
   blaze:
+    name: "Blaze"
     head_drop_probability: 100
     token:
       name: "Blaze Token"
-      heads: 400
-      xp: 25
-      player_kills: 1
+      heads_text: "Heads Required: "
+      heads_required: 400
+      xp_text: "XP Required: "
+      xp_required: 25
+      player_kills_text: "Kills Required: "
+      player_kills_required: 1
     masks:
+      name: "Blaze Mask"
       tier_1:
-        name: "Blaze Mask"
-        lore: "Tier 1"
+        name: "Tier 1"
         tokens: 1
         money: 1000
       tier_2:
-        name: "Blaze Mask"
-        lore: "Tier 2"
+        name: "Tier 2"
         tokens: 2
         money: 2000
       tier_3:
-        name: "Blaze Mask"
-        lore: "Tier 3"
+        name: "Tier 3"
         tokens: 3
         money: 3000
 permissions:

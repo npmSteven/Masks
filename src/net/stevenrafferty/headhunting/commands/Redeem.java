@@ -15,6 +15,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
+import java.lang.reflect.Array;
+import java.util.*;
+
 public class Redeem implements CommandExecutor {
 
     private Plugin plugin = Main.getPlugin(Main.class);
@@ -25,6 +28,7 @@ public class Redeem implements CommandExecutor {
     String noPermissionsMessage = plugin.getConfig().getString("messages.no_permissions_message");
     String noConsoleCommandMessage = plugin.getConfig().getString("messages.no_console_command_message");
     String tokenInventoryName = plugin.getConfig().getString("options.token_inventory_name");
+    Set creatures = plugin.getConfig().getConfigurationSection("creatures.").getKeys(false);
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -33,17 +37,12 @@ public class Redeem implements CommandExecutor {
             if (player.hasPermission(redeemPermission)) {
                 Inventory inventory = plugin.getServer().createInventory(null, 9, tokenInventoryName);
 
-                ItemStack empty = itemStacks.emptyItemStack();
-
-                inventory.setItem(0, itemStacks.tokenItemStack("Cow"));
-                inventory.setItem(1, itemStacks.tokenItemStack("Pig"));
-                inventory.setItem(2, itemStacks.tokenItemStack("Iron Golem"));
-                inventory.setItem(3, itemStacks.tokenItemStack("Skeleton"));
-                inventory.setItem(4, itemStacks.tokenItemStack("Zombie"));
-                inventory.setItem(5, itemStacks.tokenItemStack("Blaze"));
-//                inventory.setItem(6, empty);
-//                inventory.setItem(7, empty);
-//                inventory.setItem(8, empty);
+                int index = 0;
+                for (Object key : creatures) {
+                    String tokenPath = "creatures." + key + ".token.";
+                    inventory.setItem(index, itemStacks.tokenItemStack(tokenPath));
+                    index++;
+                }
 
                 player.openInventory(inventory);
             } else {
