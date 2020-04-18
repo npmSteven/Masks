@@ -30,6 +30,12 @@ public class Redeem implements CommandExecutor {
     String tokenInventoryName = plugin.getConfig().getString("options.token_inventory_name");
     Set creatures = plugin.getConfig().getConfigurationSection("creatures.").getKeys(false);
 
+    /*
+    * We create the inventory for tokens based upon the config.yml tokens
+    * We should try and save each creature name to there relative ItemStacks so that we can use it later on
+    * This will especially how when we want to use an inventory event
+    * */
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -39,8 +45,10 @@ public class Redeem implements CommandExecutor {
 
                 int index = 0;
                 for (Object key : creatures) {
-                    String tokenPath = "creatures." + key + ".token.";
-                    inventory.setItem(index, itemStacks.tokenItemStack(tokenPath));
+                    String creature = key.toString();
+
+                    ItemStack token = itemStacks.tokenItemStack(creature);
+                    inventory.setItem(index, token);
                     index++;
                 }
 

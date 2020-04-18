@@ -3,7 +3,6 @@ package net.stevenrafferty.headhunting.utils;
 import net.stevenrafferty.headhunting.Main;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.SkullType;
 import org.bukkit.entity.Creature;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -18,25 +17,27 @@ public class ItemStacks {
 
     private Plugin plugin = Main.getPlugin(Main.class);
 
-    public ItemStack emptyItemStack() {
-        ItemStack empty = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 15);
-        ItemMeta emptyMeta = empty.getItemMeta();
-        emptyMeta.setDisplayName(" ");
-        emptyMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        empty.setItemMeta(emptyMeta);
-        return empty;
-    }
+    private Helper helper = new Helper();
 
-    public ItemStack skullItemStack(String type, Creature killed) {
-        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+    public ItemStack skullItemStack(String creature) {
+        String name = plugin.getConfig().getString("creatures." + creature + ".head.name");
+        String type = plugin.getConfig().getString("creatures." + creature + ".head.type");
+        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 50, (short) 3);
         SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
         skullMeta.setOwner(type);
-        skullMeta.setDisplayName(ChatColor.GREEN + killed.getName() + "'s Head");
+        skullMeta.setDisplayName(name);
+
+        List<String> lore = new ArrayList<>();
+        lore.add(helper.convertToInvisibleString(creature));
+        skullMeta.setLore(lore);
+        skullMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         skull.setItemMeta(skullMeta);
         return skull;
     }
 
-    public ItemStack tokenItemStack(String tokenPath) {
+    public ItemStack tokenItemStack(String creature) {
+        String tokenPath = "creatures." + creature + ".token.";
+
         String name = plugin.getConfig().getString(tokenPath + "name");
 
         String headsText = plugin.getConfig().getString(tokenPath + "heads.text");
@@ -51,7 +52,9 @@ public class ItemStacks {
         ItemStack token = new ItemStack(Material.NETHER_STAR, 1);
         ItemMeta tokenMeta = token.getItemMeta();
         tokenMeta.setDisplayName(name);
+
         List<String> lore = new ArrayList<>();
+        lore.add(helper.convertToInvisibleString(creature));
         lore.add(headsText + headsRequired);
         lore.add(xpText + xpRequired);
         lore.add(killsText + killsRequired);
@@ -59,8 +62,8 @@ public class ItemStacks {
 
         tokenMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         token.setItemMeta(tokenMeta);
+
         return token;
     }
-
 
 }

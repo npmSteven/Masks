@@ -34,9 +34,8 @@ public class MobHeadDrop implements Listener {
         if (player.hasPermission(mob_head_drops)) {
           if (shouldDropMobHead(killed.getType())) {
             if ((killed.isDead() || killed.getHealth() <= 0) && mobHeads.isValid(killed.getName())) {
-              String type = killed.getType().toString().toLowerCase();
-              String skullType = plugin.getConfig().getString("creatures." + type + ".head");
-              ItemStack skull = itemStacks.skullItemStack(skullType, killed);
+              String creature = killed.getType().toString().toLowerCase();
+              ItemStack skull = itemStacks.skullItemStack(creature);
               event.getDrops().add(skull);
             }
           }
