@@ -38,14 +38,14 @@ public class ItemStacks {
     public ItemStack tokenItemStack(String tokenPath) {
         String name = plugin.getConfig().getString(tokenPath + "name");
 
-        String headsText = plugin.getConfig().getString(tokenPath + "heads_text");
-        int headsRequired = plugin.getConfig().getInt(tokenPath + "heads_required");
+        String headsText = plugin.getConfig().getString(tokenPath + "heads.text");
+        int headsRequired = plugin.getConfig().getInt(tokenPath + "heads.required");
 
-        String xpText = plugin.getConfig().getString(tokenPath + "xp_text");
-        int xpRequired = plugin.getConfig().getInt(tokenPath + "xp_required");
+        String xpText = plugin.getConfig().getString(tokenPath + "xp.text");
+        int xpRequired = plugin.getConfig().getInt(tokenPath + "xp.required");
 
-        String killsText = plugin.getConfig().getString(tokenPath + "player_kills_text");
-        int killsRequired = plugin.getConfig().getInt(tokenPath + "player_kills_required");
+        String killsText = plugin.getConfig().getString(tokenPath + "player_kills.text");
+        int killsRequired = plugin.getConfig().getInt(tokenPath + "player_kills.required");
 
         ItemStack token = new ItemStack(Material.NETHER_STAR, 1);
         ItemMeta tokenMeta = token.getItemMeta();
