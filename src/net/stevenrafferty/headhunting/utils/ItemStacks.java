@@ -22,7 +22,9 @@ public class ItemStacks {
     public ItemStack skullItemStack(String creature) {
         String name = plugin.getConfig().getString("creatures." + creature + ".head.name");
         String type = plugin.getConfig().getString("creatures." + creature + ".head.type");
-        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 50, (short) 3);
+        int amount = plugin.getConfig().getInt("creatures." + creature + ".head.drop_amount");
+
+        ItemStack skull = new ItemStack(Material.SKULL_ITEM, amount, (short) 3);
         SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
         skullMeta.setOwner(type);
         skullMeta.setDisplayName(name);

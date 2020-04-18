@@ -45,7 +45,8 @@ public class MobHeadDrop implements Listener {
   }
 
   public boolean shouldDropMobHead(EntityType type) {
-    int probability = plugin.getConfig().getInt("creatures." + type.toString().toLowerCase() + ".head_drop_probability");
+    String creature = type.toString().toLowerCase();
+    int probability = plugin.getConfig().getInt("creatures." + creature + ".head.drop_probability");
     Random r = new Random();
     int low = 1;
     int high = 100;

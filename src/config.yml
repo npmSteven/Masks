@@ -4,7 +4,8 @@ creatures:
     head:
       type: "MHF_Cow"
       name: "Cow's Head"
-    head_drop_probability: 100
+      drop_probability: 100
+      drop_amount: 1
     token:
       name: "Cow Token"
       heads:
@@ -35,7 +36,8 @@ creatures:
     head:
       type: "MHF_Pig"
       name: "Pig's Head"
-    head_drop_probability: 100
+      drop_probability: 100
+      drop_amount: 1
     token:
       name: "Pig Token"
       heads:
@@ -66,7 +68,8 @@ creatures:
     head:
       type: "MHF_Golem"
       name: "Iron Golem's Head"
-    head_drop_probability: 100
+      drop_probability: 100
+      drop_amount: 1
     token:
       name: "Iron Golem Token"
       heads:
@@ -128,7 +131,8 @@ creatures:
     head:
       type: "MHF_Zombie"
       name: "Zombie's Head"
-    head_drop_probability: 100
+      drop_probability: 100
+      drop_amount: 1
     token:
       name: "Zombie Token"
       heads:
@@ -159,7 +163,8 @@ creatures:
     head:
       type: "MHF_Blaze"
       name: "Blaze's Head"
-    head_drop_probability: 100
+      drop_probability: 100
+      drop_amount: 1
     token:
       name: "Blaze Token"
       heads:
@@ -191,6 +196,8 @@ permissions:
 messages:
   no_permissions_message: "No permissions"
   no_console_command_message: "Console can not execute this command"
+  give_token_message: "Here a token"
+  not_enough_heads: "You do not have enough heads to obtain this token"
 options:
   token_inventory_name: "Tokens"
 database:

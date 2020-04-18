@@ -54,6 +54,8 @@ public class TokensInventory implements Listener {
 
             int headsRequire = plugin.getConfig().getInt("creatures." + creature + ".token.heads.required");
 
+            // Loop through contents of player inventory
+            // Check if the player has any mob heads and exchange for token
             int skullAmount = 0;
             for (int i = 0; i < contents.length; i++) {
                 ItemStack content = contents[i];
@@ -63,20 +65,23 @@ public class TokensInventory implements Listener {
                         skullAmount += content.getAmount();
                     }
                 }
+                // Break out of loop, as no need to count any more
                 if (skullAmount == headsRequire) {
                     break;
                 }
             }
 
+            String giveTokenMessage = plugin.getConfig().getString("messages.give_token_message");
+            String notEnoughHeads = plugin.getConfig().getString("messages.not_enough_heads");
+
             if (skullAmount >= headsRequire) {
                 playerInventory.remove(skull);
                 helper.removeHeads(playerInventory, skull, headsRequire);
-                player.sendMessage("Here's a token");
+                player.sendMessage(giveTokenMessage);
                 playerInventory.addItem(itemStacks.tokenItemStack(creature));
             } else {
-                player.sendMessage("You do not have enough heads to obtain this token");
+                player.sendMessage(notEnoughHeads);
             }
-            System.out.print(skullAmount);
         }
     }
 
