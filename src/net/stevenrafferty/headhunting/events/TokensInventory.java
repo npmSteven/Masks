@@ -1,10 +1,12 @@
 package net.stevenrafferty.headhunting.events;
 
 import net.stevenrafferty.headhunting.Main;
+import net.stevenrafferty.headhunting.handlers.Experience;
 import net.stevenrafferty.headhunting.utils.Helper;
 import net.stevenrafferty.headhunting.utils.ItemStacks;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Creature;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,6 +28,8 @@ public class TokensInventory implements Listener {
 
     private Helper helper = new Helper();
 
+    private Experience experience = new Experience();
+
     String tokenInventoryName = helper.getConfigMessage("options.token_inventory_name");
 
     @EventHandler
@@ -34,7 +38,6 @@ public class TokensInventory implements Listener {
 
         ClickType click = event.getClick();
         Inventory tokenInventory = event.getClickedInventory();
-        Inventory playerInventory = player.getInventory();
         ItemStack item = event.getCurrentItem();
 
         if (tokenInventory == null) {
@@ -45,43 +48,80 @@ public class TokensInventory implements Listener {
             if (item == null || !item.hasItemMeta() || item.getType().equals(Material.AIR)) {
                 return;
             }
+            Inventory playerInventory = player.getInventory();
             ItemMeta itemMeta = item.getItemMeta();
-
             String creature = helper.convertToVisibleString(itemMeta.getLore().get(0));
             ItemStack skull = itemStacks.skullItemStack(creature);
-            SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
-            ItemStack[] contents = playerInventory.getContents();
-
+            String giveTokenMessage = helper.getConfigMessage("messages.give_token_message");
             int headsRequire = plugin.getConfig().getInt("creatures." + creature + ".token.heads.required");
 
-            // Loop through contents of player inventory
-            // Check if the player has any mob heads and exchange for token
-            int skullAmount = 0;
-            for (int i = 0; i < contents.length; i++) {
-                ItemStack content = contents[i];
-                if (content != null && content.hasItemMeta() && content.getType().equals(Material.SKULL_ITEM)) {
-                    SkullMeta contentMeta = (SkullMeta) content.getItemMeta();
+            boolean hasEnoughHeads = checkPlayerHasEnoughHeads(item, player);
+            boolean hasEnoughXp = checkPlayerHasEnoughXp(player, creature);
+//            boolean hasEnoughPlayerKills = checkPlayerHasEnoughKills(player);
+
+            if (hasEnoughHeads && hasEnoughXp) {
+                helper.removeHeads(playerInventory, skull, headsRequire);
+                player.sendMessage(giveTokenMessage);
+                playerInventory.addItem(itemStacks.tokenItemStack(creature));
+            }
+        }
+    }
+
+    public boolean checkPlayerHasEnoughHeads(ItemStack item, Player player) {
+        Inventory playerInventory = player.getInventory();
+        ItemMeta itemMeta = item.getItemMeta();
+
+        String creature = helper.convertToVisibleString(itemMeta.getLore().get(0));
+        ItemStack skull = itemStacks.skullItemStack(creature);
+        SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
+        ItemStack[] contents = playerInventory.getContents();
+
+        int headsRequire = plugin.getConfig().getInt("creatures." + creature + ".token.heads.required");
+
+        // Loop through contents of player inventory
+        // Check if the player has any mob heads and exchange for token
+        int skullAmount = 0;
+        for (int i = 0; i < contents.length; i++) {
+            ItemStack content = contents[i];
+            if (content != null && content.hasItemMeta() && content.getType().equals(Material.SKULL_ITEM)) {
+                SkullMeta contentMeta = (SkullMeta) content.getItemMeta();
+                if (contentMeta.hasDisplayName()) {
                     if (contentMeta.getDisplayName().equals(skullMeta.getDisplayName()) && contentMeta.getOwner().equals(skullMeta.getOwner())) {
                         skullAmount += content.getAmount();
                     }
                 }
-                // Break out of loop, as no need to count any more
-                if (skullAmount == headsRequire) {
-                    break;
-                }
             }
-            String giveTokenMessage = helper.getConfigMessage("messages.give_token_message");
-            String notEnoughHeads = helper.getConfigMessage("messages.not_enough_heads");
-
-            if (skullAmount >= headsRequire) {
-                playerInventory.remove(skull);
-                helper.removeHeads(playerInventory, skull, headsRequire);
-                player.sendMessage(giveTokenMessage);
-                playerInventory.addItem(itemStacks.tokenItemStack(creature));
-            } else {
-                player.sendMessage(notEnoughHeads);
+            // Break out of loop, as no need to count any more
+            if (skullAmount == headsRequire) {
+                break;
             }
         }
+        String notEnoughHeads = helper.getConfigMessage("messages.not_enough_heads");
+
+        if (skullAmount >= headsRequire) {
+
+            return true;
+        } else {
+            player.sendMessage(notEnoughHeads);
+            return false;
+        }
+    }
+
+    public boolean checkPlayerHasEnoughXp(Player player, String creature) {
+        int xpRequired = plugin.getConfig().getInt("creatures." + creature + ".token.xp.required");
+        float xpRequiredLevel = experience.getExpAtLevel(xpRequired);
+        float currentXp = experience.getPlayerExp(player);
+        System.out.print(xpRequiredLevel);
+        System.out.print(currentXp);
+        if (currentXp >= xpRequiredLevel) {
+            return true;
+        }
+        player.sendMessage("You do not have enough xp");
+        return false;
+    }
+
+    public boolean checkPlayerHasEnoughKills(Player player) {
+        return false;
     }
 
 
