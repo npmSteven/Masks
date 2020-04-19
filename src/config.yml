@@ -198,6 +198,7 @@ messages:
   no_console_command_message: "&4Console can not execute this command"
   give_token_message: "&2Here a token"
   not_enough_heads: "&4You do not have enough heads to obtain this token"
+  not_enough_xp: "&4You do not have enough xp to obtain this token"
 options:
   token_inventory_name: "&2Tokens"
 database:

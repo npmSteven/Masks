@@ -109,14 +109,14 @@ public class TokensInventory implements Listener {
 
     public boolean checkPlayerHasEnoughXp(Player player, String creature) {
         int xpRequired = plugin.getConfig().getInt("creatures." + creature + ".token.xp.required");
+
         float xpRequiredLevel = experience.getExpAtLevel(xpRequired);
         float currentXp = experience.getPlayerExp(player);
-        System.out.print(xpRequiredLevel);
-        System.out.print(currentXp);
         if (currentXp >= xpRequiredLevel) {
             return true;
         }
-        player.sendMessage("You do not have enough xp");
+        String notEnoughXp = helper.getConfigMessage("messages.not_enough_xp");
+        player.sendMessage(notEnoughXp);
         return false;
     }
 
