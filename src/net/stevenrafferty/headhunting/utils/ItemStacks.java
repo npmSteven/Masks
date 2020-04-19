@@ -20,7 +20,8 @@ public class ItemStacks {
     private Helper helper = new Helper();
 
     public ItemStack skullItemStack(String creature) {
-        String name = plugin.getConfig().getString("creatures." + creature + ".head.name");
+        String name = helper.getConfigMessage("creatures." + creature + ".head.name");
+
         String type = plugin.getConfig().getString("creatures." + creature + ".head.type");
         int amount = plugin.getConfig().getInt("creatures." + creature + ".head.drop_amount");
 
@@ -40,15 +41,15 @@ public class ItemStacks {
     public ItemStack tokenItemStack(String creature) {
         String tokenPath = "creatures." + creature + ".token.";
 
-        String name = plugin.getConfig().getString(tokenPath + "name");
+        String name = helper.getConfigMessage(tokenPath + "name");
 
-        String headsText = plugin.getConfig().getString(tokenPath + "heads.text");
+        String headsText = helper.getConfigMessage(tokenPath + "heads.text");
         int headsRequired = plugin.getConfig().getInt(tokenPath + "heads.required");
 
-        String xpText = plugin.getConfig().getString(tokenPath + "xp.text");
+        String xpText = helper.getConfigMessage(tokenPath + "xp.text");
         int xpRequired = plugin.getConfig().getInt(tokenPath + "xp.required");
 
-        String killsText = plugin.getConfig().getString(tokenPath + "player_kills.text");
+        String killsText = helper.getConfigMessage(tokenPath + "player_kills.text");
         int killsRequired = plugin.getConfig().getInt(tokenPath + "player_kills.required");
 
         ItemStack token = new ItemStack(Material.NETHER_STAR, 1);

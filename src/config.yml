@@ -3,32 +3,32 @@ creatures:
     name: "Cow"
     head:
       type: "MHF_Cow"
-      name: "Cow's Head"
+      name: "&2Cow's Head"
       drop_probability: 100
       drop_amount: 1
     token:
-      name: "Cow Token"
+      name: "&2Cow Token"
       heads:
-        text: "Heads Required: "
+        text: "&2Heads Required: "
         required: 400
       xp:
-        text: "XP Required: "
+        text: "&2XP Required: "
         required: 25
       player_kills:
-        text: "Kills Required: "
+        text: "&2Kills Required: "
         required: 1
     masks:
-      name: "Cow Mask"
+      name: "&2Cow Mask"
       tier_1:
-        name: "Tier 1"
+        name: "&2Tier 1"
         tokens: 1
         money: 100
       tier_2:
-        name: "Tier 2"
+        name: "&2Tier 2"
         tokens: 2
         money: 2000
       tier_3:
-        name: "Tier 3"
+        name: "&2Tier 3"
         tokens: 3
         money: 3000
   pig:
@@ -39,167 +39,167 @@ creatures:
       drop_probability: 100
       drop_amount: 1
     token:
-      name: "Pig Token"
+      name: "&2Pig Token"
       heads:
-        text: "Heads Required: "
+        text: "&2Heads Required: "
         required: 400
       xp:
-        text: "XP Required: "
+        text: "&2XP Required: "
         required: 25
       player_kills:
-        text: "Kills Required: "
+        text: "&2Kills Required: "
         required: 1
     masks:
-      name: "Pig Mask"
+      name: "&2Pig Mask"
       tier_1:
-        name: "Tier 1"
+        name: "&2Tier 1"
         tokens: 1
         money: 1000
       tier_2:
-        name: "Tier 2"
+        name: "&2Tier 2"
         tokens: 2
         money: 2000
       tier_3:
-        name: "Tier 3"
+        name: "&2Tier 3"
         tokens: 3
         money: 3000
   iron_golem:
     name: "Iron Golem"
     head:
       type: "MHF_Golem"
-      name: "Iron Golem's Head"
+      name: "&2Iron Golem's Head"
       drop_probability: 100
       drop_amount: 1
     token:
-      name: "Iron Golem Token"
+      name: "&2Iron Golem Token"
       heads:
-        text: "Heads Required: "
+        text: "&2Heads Required: "
         required: 400
       xp:
-        text: "XP Required: "
+        text: "&2XP Required: "
         required: 25
       player_kills:
-        text: "Kills Required: "
+        text: "&2Kills Required: "
         required: 1
     masks:
-      name: "Iron Golem Mask"
+      name: "&2Iron Golem Mask"
       tier_1:
-        name: "Tier 1"
+        name: "&2Tier 1"
         tokens: 1
         money: 1000
       tier_2:
-        name: "Tier 2"
+        name: "&2Tier 2"
         tokens: 2
         money: 2000
       tier_3:
-        name: "Tier 3"
+        name: "&2Tier 3"
         tokens: 3
         money: 3000
   skeleton:
     name: "Skeleton"
     head:
       type: "MHF_Skeleton"
-      name: "Skeleton's Head"
+      name: "&2Skeleton's Head"
     head_drop_probability: 100
     token:
-      name: "Skeleton Token"
+      name: "&2Skeleton Token"
       heads:
-        text: "Heads Required: "
+        text: "&2Heads Required: "
         required: 400
       xp:
-        text: "XP Required: "
+        text: "&2XP Required: "
         required: 25
       player_kills:
-        text: "Kills Required: "
+        text: "&2Kills Required: "
         required: 1
     masks:
-      name: "Skeleton Mask"
+      name: "&2Skeleton Mask"
       tier_1:
-        name: "Tier 1"
+        name: "&2Tier 1"
         tokens: 1
         money: 1000
       tier_2:
-        name: "Tier 2"
+        name: "&2Tier 2"
         tokens: 2
         money: 2000
       tier_3:
-        name: "Tier 3"
+        name: "&2Tier 3"
         tokens: 3
         money: 3000
   zombie:
     name: "Zombie"
     head:
       type: "MHF_Zombie"
-      name: "Zombie's Head"
+      name: "&2Zombie's Head"
       drop_probability: 100
       drop_amount: 1
     token:
-      name: "Zombie Token"
+      name: "&2Zombie Token"
       heads:
-        text: "Heads Required: "
+        text: "&2Heads Required: "
         required: 400
       xp:
-        text: "XP Required: "
+        text: "&2XP Required: "
         required: 25
       player_kills:
-        text: "Kills Required: "
+        text: "&2Kills Required: "
         required: 1
     masks:
-      name: "Zombie Mask"
+      name: "&2Zombie Mask"
       tier_1:
-        name: "Tier 1"
+        name: "&2Tier 1"
         tokens: 1
         money: 1000
       tier_2:
-        name: "Tier 2"
+        name: "&2Tier 2"
         tokens: 2
         money: 2000
       tier_3:
-        name: "Tier 3"
+        name: "&2Tier 3"
         tokens: 3
         money: 3000
   blaze:
-    name: "Blaze"
+    name: "&2Blaze"
     head:
       type: "MHF_Blaze"
-      name: "Blaze's Head"
+      name: "&2Blaze's Head"
       drop_probability: 100
       drop_amount: 1
     token:
-      name: "Blaze Token"
+      name: "&2Blaze Token"
       heads:
-        text: "Heads Required: "
+        text: "&2Heads Required: "
         required: 400
       xp:
-        text: "XP Required: "
+        text: "&2XP Required: "
         required: 25
       player_kills:
-        text: "Kills Required: "
+        text: "&2Kills Required: "
         required: 1
     masks:
-      name: "Blaze Mask"
+      name: "&2Blaze Mask"
       tier_1:
-        name: "Tier 1"
+        name: "&2Tier 1"
         tokens: 1
         money: 1000
       tier_2:
-        name: "Tier 2"
+        name: "&2Tier 2"
         tokens: 2
         money: 2000
       tier_3:
-        name: "Tier 3"
+        name: "&2Tier 3"
         tokens: 3
         money: 3000
 permissions:
   mob_head_drops: "headhunting.mob_head_drops"
   redeem: "headhunting.redeem"
 messages:
-  no_permissions_message: "No permissions"
-  no_console_command_message: "Console can not execute this command"
-  give_token_message: "Here a token"
-  not_enough_heads: "You do not have enough heads to obtain this token"
+  no_permissions_message: "&4No permissions"
+  no_console_command_message: "&4Console can not execute this command"
+  give_token_message: "&2Here a token"
+  not_enough_heads: "&4You do not have enough heads to obtain this token"
 options:
-  token_inventory_name: "Tokens"
+  token_inventory_name: "&2Tokens"
 database:
   host: "localhost"
   port: 3306

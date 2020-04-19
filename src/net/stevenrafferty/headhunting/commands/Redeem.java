@@ -1,6 +1,7 @@
 package net.stevenrafferty.headhunting.commands;
 
 import net.stevenrafferty.headhunting.Main;
+import net.stevenrafferty.headhunting.utils.Helper;
 import net.stevenrafferty.headhunting.utils.ItemStacks;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -24,10 +25,14 @@ public class Redeem implements CommandExecutor {
 
     private ItemStacks itemStacks = new ItemStacks();
 
+    private Helper helper = new Helper();
+
     String redeemPermission = plugin.getConfig().getString("permissions.redeem");
-    String noPermissionsMessage = plugin.getConfig().getString("messages.no_permissions_message");
-    String noConsoleCommandMessage = plugin.getConfig().getString("messages.no_console_command_message");
-    String tokenInventoryName = plugin.getConfig().getString("options.token_inventory_name");
+
+    String noPermissionsMessage = helper.getConfigMessage("messages.no_permissions_message");
+    String noConsoleCommandMessage = helper.getConfigMessage("messages.no_console_command_message");
+    String tokenInventoryName = helper.getConfigMessage("options.token_inventory_name");
+
     Set creatures = plugin.getConfig().getConfigurationSection("creatures.").getKeys(false);
 
     /*

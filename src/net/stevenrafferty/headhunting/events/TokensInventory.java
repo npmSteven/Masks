@@ -26,7 +26,7 @@ public class TokensInventory implements Listener {
 
     private Helper helper = new Helper();
 
-    String tokenInventoryName = plugin.getConfig().getString("options.token_inventory_name");
+    String tokenInventoryName = helper.getConfigMessage("options.token_inventory_name");
 
     @EventHandler
     public void inventoryClick(InventoryClickEvent event) {
@@ -70,9 +70,8 @@ public class TokensInventory implements Listener {
                     break;
                 }
             }
-
-            String giveTokenMessage = plugin.getConfig().getString("messages.give_token_message");
-            String notEnoughHeads = plugin.getConfig().getString("messages.not_enough_heads");
+            String giveTokenMessage = helper.getConfigMessage("messages.give_token_message");
+            String notEnoughHeads = helper.getConfigMessage("messages.not_enough_heads");
 
             if (skullAmount >= headsRequire) {
                 playerInventory.remove(skull);
