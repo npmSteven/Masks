@@ -204,6 +204,10 @@ messages:
   not_enough_souls: "&4You do not have enough souls"
   no_souls: "&4You do not have any souls, to collect souls you need to kill players"
   souls_collected: "&2Souls: "
+  help: "&6HeadHunting - Commands\n
+        &6/redeem: &fGives the players a token in exchange for mob heads, xp and tokens\n
+        &6/souls: &fTells the player how many souls they have\n
+        &6/headhunting: &fTells the available commands\n"
 options:
   token_inventory_name: "&2Tokens"
 database:
