@@ -41,7 +41,7 @@ public class Experience {
     }
 
     // Give or take EXP
-    public static int changePlayerExp(Player player, int exp){
+    public int changePlayerExp(Player player, int exp){
         // Get player's current exp
         int currentExp = getPlayerExp(player);
 

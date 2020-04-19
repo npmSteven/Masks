@@ -2,11 +2,10 @@ package net.stevenrafferty.headhunting.events;
 
 import net.stevenrafferty.headhunting.Main;
 import net.stevenrafferty.headhunting.handlers.Experience;
+import net.stevenrafferty.headhunting.utils.Database;
 import net.stevenrafferty.headhunting.utils.Helper;
 import net.stevenrafferty.headhunting.utils.ItemStacks;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Creature;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -25,10 +24,9 @@ public class TokensInventory implements Listener {
     private Plugin plugin = Main.getPlugin(Main.class);
 
     private ItemStacks itemStacks = new ItemStacks();
-
     private Helper helper = new Helper();
-
     private Experience experience = new Experience();
+    private Database database = new Database();
 
     String tokenInventoryName = helper.getConfigMessage("options.token_inventory_name");
 
@@ -37,13 +35,16 @@ public class TokensInventory implements Listener {
         Player player = (Player) event.getWhoClicked();
 
         ClickType click = event.getClick();
-        Inventory tokenInventory = event.getClickedInventory();
+        Inventory clickedInventory = event.getClickedInventory();
         ItemStack item = event.getCurrentItem();
-
-        if (tokenInventory == null) {
+        if (clickedInventory == null) {
             return;
         }
-        if (tokenInventory.getName().equals(tokenInventoryName)) {
+        if (player.getOpenInventory().getTitle().equals(tokenInventoryName)) {
+            event.setCancelled(true);
+        }
+
+        if (clickedInventory.getName().equals(tokenInventoryName)) {
             event.setCancelled(true);
             if (item == null || !item.hasItemMeta() || item.getType().equals(Material.AIR)) {
                 return;
@@ -53,24 +54,33 @@ public class TokensInventory implements Listener {
             String creature = helper.convertToVisibleString(itemMeta.getLore().get(0));
             ItemStack skull = itemStacks.skullItemStack(creature);
             String giveTokenMessage = helper.getConfigMessage("messages.give_token_message");
-            int headsRequire = plugin.getConfig().getInt("creatures." + creature + ".token.heads.required");
+            int headsRequired = plugin.getConfig().getInt("creatures." + creature + ".token.heads.required");
+            int soulsRequired = plugin.getConfig().getInt("creatures." + creature + ".token.souls.required");
 
             boolean hasEnoughHeads = checkPlayerHasEnoughHeads(item, player);
-            boolean hasEnoughXp = checkPlayerHasEnoughXp(player, creature);
-//            boolean hasEnoughPlayerKills = checkPlayerHasEnoughKills(player);
 
-            if (hasEnoughHeads && hasEnoughXp) {
-                // Remove heads
-                helper.removeHeads(playerInventory, skull, headsRequire);
+            if (hasEnoughHeads) {
+                boolean hasEnoughXp = checkPlayerHasEnoughXp(player, creature);
+                if (hasEnoughXp) {
+                    boolean hasEnoughPlayerSouls = checkPlayerHasEnoughSouls(player, soulsRequired);
+                    if (hasEnoughPlayerSouls) {
+                        // Remove heads
+                        helper.removeHeads(playerInventory, skull, headsRequired);
 
-                // Remove xp
-                int xpRequired = plugin.getConfig().getInt("creatures." + creature + ".token.xp.required");
-                int xpRequiredLevel = experience.getExpAtLevel(xpRequired);
+                        // Remove xp
+                        int xpRequired = plugin.getConfig().getInt("creatures." + creature + ".token.xp.required");
+                        int xpRequiredLevel = experience.getExpAtLevel(xpRequired);
+                        experience.changePlayerExp(player, xpRequiredLevel);
 
-                // Remove kills
+                        // Remove Souls
+                        int souls = database.getSouls(player);
+                        int newSouls = souls - soulsRequired;
+                        database.updateSouls(player, newSouls);
 
-                player.sendMessage(giveTokenMessage);
-                playerInventory.addItem(itemStacks.tokenItemStack(creature));
+                        player.sendMessage(giveTokenMessage);
+                        playerInventory.addItem(itemStacks.tokenItemStack(creature, false));
+                    }
+                }
             }
         }
     }
@@ -128,8 +138,21 @@ public class TokensInventory implements Listener {
         return false;
     }
 
-    public boolean checkPlayerHasEnoughKills(Player player) {
-        return false;
+    public boolean checkPlayerHasEnoughSouls(Player player, int soulsRequired) {
+        String notEnoughSouls = helper.getConfigMessage("messages.not_enough_souls");
+        String noSouls = helper.getConfigMessage("messages.no_souls");
+        boolean hasEnoughSouls = false;
+        if (database.hasPlayer(player)) {
+            int souls = database.getSouls(player);
+            if (souls >= soulsRequired) {
+                hasEnoughSouls = true;
+            } else {
+                player.sendMessage(notEnoughSouls);
+            }
+        } else {
+            player.sendMessage(noSouls);
+        }
+        return hasEnoughSouls;
     }
 
 

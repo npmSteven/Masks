@@ -14,8 +14,8 @@ creatures:
       xp:
         text: "&2XP Required: "
         required: 25
-      player_kills:
-        text: "&2Kills Required: "
+      souls:
+        text: "&2Souls Required: "
         required: 1
     masks:
       name: "&2Cow Mask"
@@ -46,8 +46,8 @@ creatures:
       xp:
         text: "&2XP Required: "
         required: 25
-      player_kills:
-        text: "&2Kills Required: "
+      souls:
+        text: "&2Souls Required: "
         required: 1
     masks:
       name: "&2Pig Mask"
@@ -78,8 +78,8 @@ creatures:
       xp:
         text: "&2XP Required: "
         required: 25
-      player_kills:
-        text: "&2Kills Required: "
+      souls:
+        text: "&2Souls Required: "
         required: 1
     masks:
       name: "&2Iron Golem Mask"
@@ -100,7 +100,8 @@ creatures:
     head:
       type: "MHF_Skeleton"
       name: "&2Skeleton's Head"
-    head_drop_probability: 100
+      drop_probability: 100
+      drop_amount: 1
     token:
       name: "&2Skeleton Token"
       heads:
@@ -109,8 +110,8 @@ creatures:
       xp:
         text: "&2XP Required: "
         required: 25
-      player_kills:
-        text: "&2Kills Required: "
+      souls:
+        text: "&2Souls Required: "
         required: 1
     masks:
       name: "&2Skeleton Mask"
@@ -141,8 +142,8 @@ creatures:
       xp:
         text: "&2XP Required: "
         required: 25
-      player_kills:
-        text: "&2Kills Required: "
+      souls:
+        text: "&2Souls Required: "
         required: 1
     masks:
       name: "&2Zombie Mask"
@@ -173,8 +174,8 @@ creatures:
       xp:
         text: "&2XP Required: "
         required: 25
-      player_kills:
-        text: "&2Kills Required: "
+      souls:
+        text: "&2Souls Required: "
         required: 1
     masks:
       name: "&2Blaze Mask"
@@ -199,6 +200,8 @@ messages:
   give_token_message: "&2Here a token"
   not_enough_heads: "&4You do not have enough heads to obtain this token"
   not_enough_xp: "&4You do not have enough xp to obtain this token"
+  not_enough_souls: "&4You do not have enough souls"
+  no_souls: "&4You do not have any souls, to collect souls you need to kill players"
 options:
   token_inventory_name: "&2Tokens"
 database:

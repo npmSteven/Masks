@@ -38,7 +38,7 @@ public class ItemStacks {
         return skull;
     }
 
-    public ItemStack tokenItemStack(String creature) {
+    public ItemStack tokenItemStack(String creature, boolean hasLore) {
         String tokenPath = "creatures." + creature + ".token.";
 
         String name = helper.getConfigMessage(tokenPath + "name");
@@ -49,8 +49,8 @@ public class ItemStacks {
         String xpText = helper.getConfigMessage(tokenPath + "xp.text");
         int xpRequired = plugin.getConfig().getInt(tokenPath + "xp.required");
 
-        String killsText = helper.getConfigMessage(tokenPath + "player_kills.text");
-        int killsRequired = plugin.getConfig().getInt(tokenPath + "player_kills.required");
+        String soulsText = helper.getConfigMessage(tokenPath + "souls.text");
+        int soulsRequired = plugin.getConfig().getInt(tokenPath + "souls.required");
 
         ItemStack token = new ItemStack(Material.NETHER_STAR, 1);
         ItemMeta tokenMeta = token.getItemMeta();
@@ -58,9 +58,12 @@ public class ItemStacks {
 
         List<String> lore = new ArrayList<>();
         lore.add(helper.convertToInvisibleString(creature));
-        lore.add(headsText + headsRequired);
-        lore.add(xpText + xpRequired);
-        lore.add(killsText + killsRequired);
+
+        if (hasLore) {
+            lore.add(headsText + headsRequired);
+            lore.add(xpText + xpRequired);
+            lore.add(soulsText + soulsRequired);
+        }
         tokenMeta.setLore(lore);
 
         tokenMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);

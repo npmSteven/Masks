@@ -3,20 +3,14 @@ package net.stevenrafferty.headhunting.commands;
 import net.stevenrafferty.headhunting.Main;
 import net.stevenrafferty.headhunting.utils.Helper;
 import net.stevenrafferty.headhunting.utils.ItemStacks;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Redeem implements CommandExecutor {
@@ -35,12 +29,6 @@ public class Redeem implements CommandExecutor {
 
     Set creatures = plugin.getConfig().getConfigurationSection("creatures.").getKeys(false);
 
-    /*
-    * We create the inventory for tokens based upon the config.yml tokens
-    * We should try and save each creature name to there relative ItemStacks so that we can use it later on
-    * This will especially how when we want to use an inventory event
-    * */
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -52,7 +40,7 @@ public class Redeem implements CommandExecutor {
                 for (Object key : creatures) {
                     String creature = key.toString();
 
-                    ItemStack token = itemStacks.tokenItemStack(creature);
+                    ItemStack token = itemStacks.tokenItemStack(creature, true);
                     inventory.setItem(index, token);
                     index++;
                 }

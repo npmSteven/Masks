@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import java.sql.*;
-import java.util.UUID;
 
 public class Database {
 
@@ -24,12 +23,6 @@ public class Database {
       }
       setConnectionDetails();
       Class.forName("com.mysql.jdbc.Driver");
-
-      System.out.print("host: " + host);
-      System.out.print("port: " + port);
-      System.out.print("database: " + database);
-      System.out.print("username: " + username);
-      System.out.print("password: " + password);
 
       setConnection(DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username, password));
       Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "HeadHunting: MySQL Connected!");
@@ -77,11 +70,8 @@ public class Database {
 
   public void updateKills(Player player, int kills) {
     try {
-      int playerKills = getKills(player);
-      int totalPlayerKills = playerKills + kills;
-
       PreparedStatement statement = getConnection().prepareStatement("UPDATE playerkills SET Kills = ? WHERE Player_UUID = ?");
-      statement.setInt(1, totalPlayerKills);
+      statement.setInt(1, kills);
       statement.setString(2, player.getUniqueId().toString());
       statement.executeUpdate();
     } catch (SQLException error) {
@@ -107,11 +97,8 @@ public class Database {
 
   public void updateSouls(Player player, int souls) {
     try {
-      int playerSouls = getSouls(player);
-      int totalPlayerSouls = playerSouls + souls;
-
       PreparedStatement statement = getConnection().prepareStatement("UPDATE playerkills SET Souls = ? WHERE Player_UUID = ?");
-      statement.setInt(1, totalPlayerSouls);
+      statement.setInt(1, souls);
       statement.setString(2, player.getUniqueId().toString());
       statement.executeUpdate();
     } catch (SQLException error) {

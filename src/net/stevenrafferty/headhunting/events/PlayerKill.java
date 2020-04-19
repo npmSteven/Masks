@@ -6,8 +6,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-import java.sql.SQLException;
-
 public class PlayerKill implements Listener {
 
     private Database database = new Database();
@@ -19,12 +17,25 @@ public class PlayerKill implements Listener {
             System.out.print(player.getName());
             boolean hasPlayer = database.hasPlayer(player);
             if (hasPlayer) {
-                database.updateKills(player, 1);
-                database.updateSouls(player, 1);
+                updateKills(player);
+                updateSouls(player);
             } else {
                 database.createKills(player, 1, 1);
             }
         }
+    }
+
+    public void updateKills(Player player) {
+        int currentKills = database.getKills(player);
+        int newCurrentKills = currentKills + 1;
+        database.updateKills(player, newCurrentKills);
+    }
+
+    public void updateSouls(Player player) {
+        int currentSouls = database.getSouls(player);
+        int newCurrentSouls = currentSouls + 1;
+        database.updateSouls(player, newCurrentSouls);
+
     }
 
 }
