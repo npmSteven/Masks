@@ -3,11 +3,10 @@ package net.stevenrafferty.headhunting;
 import net.stevenrafferty.headhunting.commands.Redeem;
 import net.stevenrafferty.headhunting.events.MobHeadDrop;
 import net.stevenrafferty.headhunting.events.TokensInventory;
-import net.stevenrafferty.headhunting.utils.Database;
+import net.stevenrafferty.headhunting.utils.Helper;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.sql.SQLException;
 
 public class Main extends JavaPlugin {
 
@@ -21,6 +20,7 @@ public class Main extends JavaPlugin {
 
     getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "HeadHunting: Enabled");
     loadConfig();
+    removeMaterials();
 
     // Connect to db
 //    Database database = new Database();
@@ -40,6 +40,11 @@ public class Main extends JavaPlugin {
   public void loadConfig() {
     getConfig().options().copyDefaults(true);
     saveConfig();
+  }
+
+  public void removeMaterials() {
+    Helper helper = new Helper();
+    helper.remove(Material.BEACON);
   }
 
 }

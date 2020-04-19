@@ -1,12 +1,19 @@
 package net.stevenrafferty.headhunting.utils;
 
+import net.stevenrafferty.headhunting.Main;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.plugin.Plugin;
+
+import java.util.Iterator;
 
 public class Helper {
+
+    private Plugin plugin = Main.getPlugin(Main.class);
 
     public static String convertToInvisibleString(String s) {
         String hidden = "";
@@ -36,6 +43,19 @@ public class Helper {
                     amount = -newAmount;
                     if (amount == 0) break;
                 }
+            }
+        }
+    }
+
+    public void remove(Material m) {
+        Iterator<Recipe> it =  plugin.getServer().recipeIterator();
+        Recipe recipe;
+        while(it.hasNext())
+        {
+            recipe = it.next();
+            if (recipe != null && recipe.getResult().getType() == m)
+            {
+                it.remove();
             }
         }
     }
