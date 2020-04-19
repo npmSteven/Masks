@@ -8,4 +8,6 @@ commands:
   redeem:
     description: Exchanges mob heads for tokens
     usage: /redeem
-    permission: headhunting.redeem
+  souls:
+    description: Tells you how many souls you have collected
+    usage: /souls
