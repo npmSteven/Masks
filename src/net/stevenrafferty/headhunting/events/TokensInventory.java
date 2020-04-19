@@ -60,7 +60,16 @@ public class TokensInventory implements Listener {
 //            boolean hasEnoughPlayerKills = checkPlayerHasEnoughKills(player);
 
             if (hasEnoughHeads && hasEnoughXp) {
+                // Remove heads
                 helper.removeHeads(playerInventory, skull, headsRequire);
+
+                // Remove xp
+                int xpRequired = plugin.getConfig().getInt("creatures." + creature + ".token.xp.required");
+                int xpRequiredLevel = experience.getExpAtLevel(xpRequired);
+                System.out.print(experience.changePlayerExp(player, xpRequiredLevel));
+
+                // Remove kills
+
                 player.sendMessage(giveTokenMessage);
                 playerInventory.addItem(itemStacks.tokenItemStack(creature));
             }

@@ -49,8 +49,7 @@ public class Experience {
         player.setExp(0);
         player.setLevel(0);
 
-        // Give the player their exp back, with the difference
-        int newExp = currentExp + exp;
+        int newExp = currentExp - exp;
         player.giveExp(newExp);
 
         // Return the player's new exp amount
