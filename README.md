@@ -11,6 +11,7 @@
 ## Commands
 * /redeem - Gives token to player
 * /souls - Tells the player how many souls they have collected
+* /headhunting | /hh - Shows the available commands
 
 ## Permissions
 * headhunting.mob_head_drops - This will allow heads dropping for that player

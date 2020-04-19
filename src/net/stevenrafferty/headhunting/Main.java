@@ -1,5 +1,6 @@
 package net.stevenrafferty.headhunting;
 
+import net.stevenrafferty.headhunting.commands.Help;
 import net.stevenrafferty.headhunting.commands.Redeem;
 import net.stevenrafferty.headhunting.commands.Souls;
 import net.stevenrafferty.headhunting.events.MobHeadDrop;
@@ -24,6 +25,7 @@ public class Main extends JavaPlugin {
     // Commands
     getCommand("redeem").setExecutor(new Redeem());
     getCommand("souls").setExecutor(new Souls());
+    getCommand("headhunting").setExecutor(new Help());
 
     getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "HeadHunting: Enabled");
     loadConfig();
@@ -31,6 +33,7 @@ public class Main extends JavaPlugin {
 
     // Connect to db
     Database database = new Database();
+
     try {
       database.connect();
     } catch (ClassNotFoundException error) {
@@ -38,6 +41,7 @@ public class Main extends JavaPlugin {
     } catch (SQLException error) {
       error.printStackTrace();
     }
+
   }
 
   public void onDisable() {
