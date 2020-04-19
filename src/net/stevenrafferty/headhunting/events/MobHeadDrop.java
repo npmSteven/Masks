@@ -1,6 +1,7 @@
 package net.stevenrafferty.headhunting.events;
 
 import net.stevenrafferty.headhunting.Main;
+import net.stevenrafferty.headhunting.utils.ItemStacks;
 import net.stevenrafferty.headhunting.utils.MobHeads;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -21,6 +22,8 @@ public class MobHeadDrop implements Listener {
 
   MobHeads mobHeads = new MobHeads();
 
+  ItemStacks itemStacks = new ItemStacks();
+
   // Check if entity is dead and if so we will drop a head
   @EventHandler
   public void onEntityDeath(EntityDeathEvent event) {
@@ -30,13 +33,9 @@ public class MobHeadDrop implements Listener {
         Player player = killed.getKiller();
         if (player.hasPermission(mob_head_drops)) {
           if (shouldDropMobHead(killed.getType())) {
-            if ((killed.isDead() || killed.getHealth() <= 0) && mobHeads.isType(killed.getType())) {
-              String type = mobHeads.getOwnerOfType(killed.getType());
-              ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
-              SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
-              skullMeta.setOwner(type);
-              skullMeta.setDisplayName(ChatColor.GREEN + killed.getName() + "'s Head");
-              skull.setItemMeta(skullMeta);
+            if ((killed.isDead() || killed.getHealth() <= 0) && mobHeads.isValid(killed.getName())) {
+              String creature = killed.getType().toString().toLowerCase();
+              ItemStack skull = itemStacks.skullItemStack(creature);
               event.getDrops().add(skull);
             }
           }
@@ -46,7 +45,8 @@ public class MobHeadDrop implements Listener {
   }
 
   public boolean shouldDropMobHead(EntityType type) {
-    int probability = plugin.getConfig().getInt("creatures." + type.toString().toLowerCase() + ".head_drop_probability");
+    String creature = type.toString().toLowerCase();
+    int probability = plugin.getConfig().getInt("creatures." + creature + ".head.drop_probability");
     Random r = new Random();
     int low = 1;
     int high = 100;

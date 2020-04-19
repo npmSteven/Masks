@@ -9,11 +9,11 @@
 * SQL Database
 
 ## Commands
-* Yet to be defined
+* /redeem - Gives token to player
 
 ## Permissions
-* headhunting.mob_head_drops - This will stop heads from dropping for that player
-
+* headhunting.mob_head_drops - This will allow heads dropping for that player
+* headhunting.redeem - Able to use redeem command
 ## Releases
 * [Download](https://github.com/StevenRafferty/HeadHunting/releases)
 
