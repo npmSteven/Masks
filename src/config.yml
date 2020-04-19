@@ -194,6 +194,7 @@ creatures:
 permissions:
   mob_head_drops: "headhunting.mob_head_drops"
   redeem: "headhunting.redeem"
+  souls: "headhunting.souls"
 messages:
   no_permissions_message: "&4No permissions"
   no_console_command_message: "&4Console can not execute this command"
@@ -202,6 +203,7 @@ messages:
   not_enough_xp: "&4You do not have enough xp to obtain this token"
   not_enough_souls: "&4You do not have enough souls"
   no_souls: "&4You do not have any souls, to collect souls you need to kill players"
+  souls_collected: "&2Souls: "
 options:
   token_inventory_name: "&2Tokens"
 database:

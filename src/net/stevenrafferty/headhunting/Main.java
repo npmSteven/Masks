@@ -1,6 +1,7 @@
 package net.stevenrafferty.headhunting;
 
 import net.stevenrafferty.headhunting.commands.Redeem;
+import net.stevenrafferty.headhunting.commands.Souls;
 import net.stevenrafferty.headhunting.events.MobHeadDrop;
 import net.stevenrafferty.headhunting.events.PlayerKill;
 import net.stevenrafferty.headhunting.events.TokensInventory;
@@ -22,6 +23,7 @@ public class Main extends JavaPlugin {
 
     // Commands
     getCommand("redeem").setExecutor(new Redeem());
+    getCommand("souls").setExecutor(new Souls());
 
     getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "HeadHunting: Enabled");
     loadConfig();
