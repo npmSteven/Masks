@@ -66,7 +66,6 @@ public class TokensInventory implements Listener {
                 // Remove xp
                 int xpRequired = plugin.getConfig().getInt("creatures." + creature + ".token.xp.required");
                 int xpRequiredLevel = experience.getExpAtLevel(xpRequired);
-                System.out.print(experience.changePlayerExp(player, xpRequiredLevel));
 
                 // Remove kills
 
