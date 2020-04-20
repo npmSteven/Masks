@@ -13,7 +13,7 @@ public class Database {
   Plugin plugin = Main.getPlugin(Main.class);
 
   private static Connection connection;
-  public String host, database, username, password, table;
+  public String host, database, username, password;
   public int port;
 
   public void connect() throws ClassNotFoundException, SQLException {
@@ -37,7 +37,6 @@ public class Database {
     database = plugin.getConfig().getString(path + "database");
     username = plugin.getConfig().getString(path + "username");
     password = plugin.getConfig().getString(path + "password");
-    table = plugin.getConfig().getString(path + "table");
   }
 
   public boolean hasPlayer(Player player) {
