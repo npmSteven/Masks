@@ -1,11 +1,10 @@
 package net.stevenrafferty.headhunting;
 
 import net.stevenrafferty.headhunting.commands.Help;
+import net.stevenrafferty.headhunting.commands.Mask;
 import net.stevenrafferty.headhunting.commands.Redeem;
 import net.stevenrafferty.headhunting.commands.Souls;
-import net.stevenrafferty.headhunting.events.MobHeadDrop;
-import net.stevenrafferty.headhunting.events.PlayerKill;
-import net.stevenrafferty.headhunting.events.TokensInventory;
+import net.stevenrafferty.headhunting.events.*;
 import net.stevenrafferty.headhunting.utils.Database;
 import net.stevenrafferty.headhunting.utils.Helper;
 import org.bukkit.ChatColor;
@@ -21,11 +20,14 @@ public class Main extends JavaPlugin {
     getServer().getPluginManager().registerEvents(new MobHeadDrop(), this);
     getServer().getPluginManager().registerEvents(new TokensInventory(), this);
     getServer().getPluginManager().registerEvents(new PlayerKill(), this);
+    getServer().getPluginManager().registerEvents(new MaskInventory(), this);
+    getServer().getPluginManager().registerEvents(new DisableHeadPlace(), this);
 
     // Commands
     getCommand("redeem").setExecutor(new Redeem());
     getCommand("souls").setExecutor(new Souls());
     getCommand("headhunting").setExecutor(new Help());
+    getCommand("mask").setExecutor(new Mask());
 
     getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "HeadHunting: Enabled");
     loadConfig();

@@ -43,7 +43,6 @@ public class TokensInventory implements Listener {
         }
 
         if (clickedInventory.getName().equals(tokenInventoryName)) {
-            event.setCancelled(true);
             if (item == null || !item.hasItemMeta() || item.getType().equals(Material.AIR)) {
                 return;
             }
@@ -115,7 +114,6 @@ public class TokensInventory implements Listener {
         String notEnoughHeads = helper.getConfigMessage("messages.not_enough_heads");
 
         if (skullAmount >= headsRequire) {
-
             return true;
         } else {
             player.sendMessage(notEnoughHeads);

@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.Plugin;
 
@@ -34,6 +35,28 @@ public class Helper {
             if (is == null || !is.getType().equals(Material.SKULL_ITEM)) continue;
             SkullMeta isMeta = (SkullMeta) is.getItemMeta();
             if (isMeta.getOwner().equals(headMeta.getOwner()) && isMeta.getDisplayName().equals(headMeta.getDisplayName())) {
+                int newAmount = is.getAmount() - amount;
+                if (newAmount > 0) {
+                    is.setAmount(newAmount);
+                    break;
+                } else {
+                    inventory.clear(slot);
+                    amount = -newAmount;
+                    if (amount == 0) break;
+                }
+            }
+        }
+    }
+
+    public static void removeTokens(Inventory inventory, ItemStack token, int amount) {
+        if (amount <= 0) return;
+        int size = inventory.getSize();
+        ItemMeta tokenMeta = token.getItemMeta();
+        for (int slot = 0; slot < size; slot++) {
+            ItemStack is = inventory.getItem(slot);
+            if (is == null || !is.getType().equals(Material.NETHER_STAR)) continue;
+            ItemMeta isMeta = is.getItemMeta();
+            if (isMeta.getDisplayName().equals(tokenMeta.getDisplayName()) && isMeta.hasLore()) {
                 int newAmount = is.getAmount() - amount;
                 if (newAmount > 0) {
                     is.setAmount(newAmount);

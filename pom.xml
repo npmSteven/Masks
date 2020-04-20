@@ -3,7 +3,7 @@
 
     <groupId>net.stevenrafferty</groupId>
     <artifactId>headhunting</artifactId>
-    <version>0.0.8</version>
+    <version>0.0.9</version>
 
     <repositories>
         <repository>
