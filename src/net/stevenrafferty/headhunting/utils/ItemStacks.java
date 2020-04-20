@@ -38,6 +38,36 @@ public class ItemStacks {
         return skull;
     }
 
+    public ItemStack maskItemStack(String creature, String tier, boolean hasLore) {
+        String name = helper.getConfigMessage("creatures." + creature + ".masks.name");
+        String loreTier = helper.getConfigMessage("creatures." + creature + ".masks." + tier + ".name");
+
+        int tokensRequired = plugin.getConfig().getInt("creatures." + creature + ".masks." + tier + ".token.required");
+        String tokenName = helper.getConfigMessage("creatures." + creature + ".masks." + tier + ".token.name");
+
+        int moneyRequired = plugin.getConfig().getInt("creatures." + creature + ".masks." + tier + ".money.required");
+        String moneyName = helper.getConfigMessage("creatures." + creature + ".masks." + tier + ".money.name");
+
+        String type = plugin.getConfig().getString("creatures." + creature + ".head.type");
+
+        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+        SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
+        skullMeta.setOwner(type);
+        skullMeta.setDisplayName(name);
+
+        List<String> lore = new ArrayList<>();
+        lore.add(helper.convertToInvisibleString(creature + "_" + tier));
+        lore.add(loreTier);
+        if (hasLore) {
+            lore.add(tokenName + tokensRequired);
+            lore.add(moneyName + moneyRequired);
+        }
+        skullMeta.setLore(lore);
+        skullMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        skull.setItemMeta(skullMeta);
+        return skull;
+    }
+
     public ItemStack tokenItemStack(String creature, boolean hasLore) {
         String tokenPath = "creatures." + creature + ".token.";
 

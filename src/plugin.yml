@@ -1,6 +1,6 @@
 name: HeadHunting
 author: "Steven Rafferty"
-version: 0.0.8
+version: 0.0.9
 description: A plugin that enables you to collect mob heads to obtain masks
 main: net.stevenrafferty.headhunting.Main
 
@@ -11,6 +11,9 @@ commands:
   souls:
     description: Tells you how many souls you have collected
     usage: /souls
+  mask:
+    description: Exchange tokens and money for Masks
+    usage: /mask
   headhunting:
     description: Lists all of the avaliable commands
     usage: /headhunting
