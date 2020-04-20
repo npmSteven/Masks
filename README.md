@@ -9,14 +9,16 @@
 * SQL Database
 
 ## Commands
-* /redeem - Gives token to player
+* /redeem - Exchanges mob heads, xp and souls for a token
 * /souls - Tells the player how many souls they have collected
+* /mask - Exchanges tokens for a mask
 * /headhunting | /hh - Shows the available commands
 
 ## Permissions
 * headhunting.mob_head_drops - This will allow heads dropping for that player
-* headhunting.redeem - Able to use /redeem
-* headhunting.souls - Able to use /souls
+* headhunting.redeem - Allows the player to use /redeem
+* headhunting.souls -Allows the player to use /souls
+* headhunting.mask - Allows the player to use /mask
 
 ## Releases
 * [Download](https://github.com/StevenRafferty/HeadHunting/releases)
