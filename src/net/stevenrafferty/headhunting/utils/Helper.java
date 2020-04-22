@@ -34,15 +34,17 @@ public class Helper {
             ItemStack is = inventory.getItem(slot);
             if (is == null || !is.getType().equals(Material.SKULL_ITEM)) continue;
             SkullMeta isMeta = (SkullMeta) is.getItemMeta();
-            if (isMeta.getOwner().equals(headMeta.getOwner()) && isMeta.getDisplayName().equals(headMeta.getDisplayName())) {
-                int newAmount = is.getAmount() - amount;
-                if (newAmount > 0) {
-                    is.setAmount(newAmount);
-                    break;
-                } else {
-                    inventory.clear(slot);
-                    amount = -newAmount;
-                    if (amount == 0) break;
+            if (isMeta.hasDisplayName() && headMeta.hasDisplayName()) {
+                if (isMeta.getOwner().equals(headMeta.getOwner()) && isMeta.getDisplayName().equals(headMeta.getDisplayName())) {
+                    int newAmount = is.getAmount() - amount;
+                    if (newAmount > 0) {
+                        is.setAmount(newAmount);
+                        break;
+                    } else {
+                        inventory.clear(slot);
+                        amount = -newAmount;
+                        if (amount == 0) break;
+                    }
                 }
             }
         }
@@ -56,15 +58,17 @@ public class Helper {
             ItemStack is = inventory.getItem(slot);
             if (is == null || !is.getType().equals(Material.NETHER_STAR)) continue;
             ItemMeta isMeta = is.getItemMeta();
-            if (isMeta.getDisplayName().equals(tokenMeta.getDisplayName()) && isMeta.hasLore()) {
-                int newAmount = is.getAmount() - amount;
-                if (newAmount > 0) {
-                    is.setAmount(newAmount);
-                    break;
-                } else {
-                    inventory.clear(slot);
-                    amount = -newAmount;
-                    if (amount == 0) break;
+            if (isMeta.hasDisplayName() && tokenMeta.hasDisplayName()) {
+                if (isMeta.getDisplayName().equals(tokenMeta.getDisplayName()) && isMeta.hasLore()) {
+                    int newAmount = is.getAmount() - amount;
+                    if (newAmount > 0) {
+                        is.setAmount(newAmount);
+                        break;
+                    } else {
+                        inventory.clear(slot);
+                        amount = -newAmount;
+                        if (amount == 0) break;
+                    }
                 }
             }
         }
@@ -85,6 +89,12 @@ public class Helper {
 
     public String getConfigMessage(String path) {
         return plugin.getConfig().getString(path).replaceAll("(&([a-f0-9]))", "\u00A7$2");
+    }
+
+    public String[] getItemMetaInfo(ItemMeta itemMeta) {
+        String firstLore = convertToVisibleString(itemMeta.getLore().get(0));
+        String[] creatureLore = firstLore.split("_");
+        return creatureLore;
     }
 
 }

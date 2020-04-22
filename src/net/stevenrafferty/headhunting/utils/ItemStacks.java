@@ -48,12 +48,9 @@ public class ItemStacks {
         int moneyRequired = plugin.getConfig().getInt("creatures." + creature + ".masks." + tier + ".money.required");
         String moneyName = helper.getConfigMessage("creatures." + creature + ".masks." + tier + ".money.name");
 
-        String type = plugin.getConfig().getString("creatures." + creature + ".head.type");
-
-        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
-        SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
-        skullMeta.setOwner(type);
-        skullMeta.setDisplayName(name);
+        ItemStack helmet = new ItemStack(Material.DIAMOND_HELMET, 1);
+        ItemMeta helmetMeta = helmet.getItemMeta();
+        helmetMeta.setDisplayName(name);
 
         List<String> lore = new ArrayList<>();
         lore.add(helper.convertToInvisibleString(creature + "_" + tier));
@@ -62,10 +59,10 @@ public class ItemStacks {
             lore.add(tokenName + tokensRequired);
             lore.add(moneyName + moneyRequired);
         }
-        skullMeta.setLore(lore);
-        skullMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        skull.setItemMeta(skullMeta);
-        return skull;
+        helmetMeta.setLore(lore);
+        helmetMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        helmet.setItemMeta(helmetMeta);
+        return helmet;
     }
 
     public ItemStack tokenItemStack(String creature, boolean hasLore) {
