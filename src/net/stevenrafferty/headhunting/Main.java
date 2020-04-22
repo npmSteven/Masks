@@ -22,6 +22,7 @@ public class Main extends JavaPlugin {
     getServer().getPluginManager().registerEvents(new PlayerKill(), this);
     getServer().getPluginManager().registerEvents(new MaskInventory(), this);
     getServer().getPluginManager().registerEvents(new DisableHeadPlace(), this);
+    getServer().getPluginManager().registerEvents(new MaskEffects(), this);
 
     // Commands
     getCommand("redeem").setExecutor(new Redeem());

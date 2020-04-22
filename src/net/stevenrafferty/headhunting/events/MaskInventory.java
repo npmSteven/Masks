@@ -1,8 +1,6 @@
 package net.stevenrafferty.headhunting.events;
 
 import net.stevenrafferty.headhunting.Main;
-import net.stevenrafferty.headhunting.handlers.Experience;
-import net.stevenrafferty.headhunting.utils.Database;
 import net.stevenrafferty.headhunting.utils.Helper;
 import net.stevenrafferty.headhunting.utils.ItemStacks;
 import org.bukkit.Material;
@@ -13,7 +11,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.Plugin;
 
 public class MaskInventory implements Listener {
@@ -22,8 +19,6 @@ public class MaskInventory implements Listener {
 
     private ItemStacks itemStacks = new ItemStacks();
     private Helper helper = new Helper();
-    private Experience experience = new Experience();
-    private Database database = new Database();
 
     String maskInventoryName = helper.getConfigMessage("options.mask_inventory_name");
 
@@ -46,8 +41,7 @@ public class MaskInventory implements Listener {
             Inventory playerInventory = player.getInventory();
             ItemMeta itemMeta = item.getItemMeta();
 
-            String firstLore = helper.convertToVisibleString(itemMeta.getLore().get(0));
-            String[] creatureLore = firstLore.split("_");
+            String[] creatureLore = helper.getItemMetaInfo(itemMeta);
             String creature = creatureLore[0];
             String tier = creatureLore[1];
 

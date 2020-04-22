@@ -27,6 +27,13 @@ creatures:
         money:
           name: "&2Money: "
           required: 1000
+        effects:
+          1:
+            effect: "SPEED"
+            amplifier: 0
+          2:
+            effect: "REGENERATION"
+            amplifier: 0
       2:
         name: "&2Tier: 2"
         token:
@@ -35,6 +42,13 @@ creatures:
         money:
           name: "&2Money: "
           required: 2000
+        effects:
+          1:
+            effect: "SPEED"
+            amplifier: 0
+          2:
+            effect: "REGENERATION"
+            amplifier: 0
       3:
         name: "&2Tier: 3"
         token:
@@ -43,6 +57,13 @@ creatures:
         money:
           name: "&2Money: "
           required: 3000
+        effects:
+          1:
+            effect: "SPEED"
+            amplifier: 0
+          2:
+            effect: "REGENERATION"
+            amplifier: 0
   pig:
     name: "Pig"
     head:
@@ -71,6 +92,13 @@ creatures:
         money:
           name: "&2Money: "
           required: 1000
+        effects:
+          1:
+            effect: "SPEED"
+            amplifier: 0
+          2:
+            effect: "REGENERATION"
+            amplifier: 0
       2:
         name: "&2Tier: 2"
         token:
@@ -79,6 +107,13 @@ creatures:
         money:
           name: "&2Money: "
           required: 2000
+        effects:
+          1:
+            effect: "SPEED"
+            amplifier: 0
+          2:
+            effect: "REGENERATION"
+            amplifier: 0
       3:
         name: "&2Tier: 3"
         token:
@@ -87,6 +122,13 @@ creatures:
         money:
           name: "&2Money: "
           required: 3000
+        effects:
+          1:
+            effect: "SPEED"
+            amplifier: 0
+          2:
+            effect: "REGENERATION"
+            amplifier: 0
   iron_golem:
     name: "Iron Golem"
     head:
@@ -115,6 +157,13 @@ creatures:
         money:
           name: "&2Money: "
           required: 1000
+        effects:
+          1:
+            effect: "SPEED"
+            amplifier: 0
+          2:
+            effect: "REGENERATION"
+            amplifier: 0
       2:
         name: "&2Tier: 2"
         token:
@@ -123,6 +172,13 @@ creatures:
         money:
           name: "&2Money: "
           required: 2000
+        effects:
+          1:
+            effect: "SPEED"
+            amplifier: 0
+          2:
+            effect: "REGENERATION"
+            amplifier: 0
       3:
         name: "&2Tier: 3"
         token:
@@ -131,6 +187,13 @@ creatures:
         money:
           name: "&2Money: "
           required: 3000
+        effects:
+          1:
+            effect: "SPEED"
+            amplifier: 0
+          2:
+            effect: "REGENERATION"
+            amplifier: 0
   skeleton:
     name: "Skeleton"
     head:
@@ -159,6 +222,13 @@ creatures:
         money:
           name: "&2Money: "
           required: 1000
+        effects:
+          1:
+            effect: "SPEED"
+            amplifier: 0
+          2:
+            effect: "REGENERATION"
+            amplifier: 0
       2:
         name: "&2Tier: 2"
         token:
@@ -167,6 +237,13 @@ creatures:
         money:
           name: "&2Money: "
           required: 2000
+        effects:
+          1:
+            effect: "SPEED"
+            amplifier: 0
+          2:
+            effect: "REGENERATION"
+            amplifier: 0
       3:
         name: "&2Tier: 3"
         token:
@@ -175,6 +252,13 @@ creatures:
         money:
           name: "&2Money: "
           required: 3000
+        effects:
+          1:
+            effect: "SPEED"
+            amplifier: 0
+          2:
+            effect: "REGENERATION"
+            amplifier: 0
   zombie:
     name: "Zombie"
     head:
@@ -203,6 +287,13 @@ creatures:
         money:
           name: "&2Money: "
           required: 1000
+        effects:
+          1:
+            effect: "SPEED"
+            amplifier: 0
+          2:
+            effect: "REGENERATION"
+            amplifier: 0
       2:
         name: "&2Tier: 2"
         token:
@@ -211,6 +302,13 @@ creatures:
         money:
           name: "&2Money: "
           required: 2000
+        effects:
+          1:
+            effect: "SPEED"
+            amplifier: 0
+          2:
+            effect: "REGENERATION"
+            amplifier: 0
       3:
         name: "&2Tier: 3"
         token:
@@ -219,6 +317,13 @@ creatures:
         money:
           name: "&2Money: "
           required: 3000
+        effects:
+          1:
+            effect: "SPEED"
+            amplifier: 0
+          2:
+            effect: "REGENERATION"
+            amplifier: 0
   blaze:
     name: "&2Blaze"
     head:
@@ -247,6 +352,13 @@ creatures:
         money:
           name: "&2Money: "
           required: 1000
+        effects:
+          1:
+            effect: "SPEED"
+            amplifier: 0
+          2:
+            effect: "REGENERATION"
+            amplifier: 0
       2:
         name: "&2Tier: 2"
         token:
@@ -255,6 +367,13 @@ creatures:
         money:
           name: "&2Money: "
           required: 2000
+        effects:
+          1:
+            effect: "SPEED"
+            amplifier: 0
+          2:
+            effect: "REGENERATION"
+            amplifier: 0
       3:
         name: "&2Tier: 3"
         token:
@@ -263,6 +382,13 @@ creatures:
         money:
           name: "&2Money: "
           required: 3000
+        effects:
+          1:
+            effect: "SPEED"
+            amplifier: 0
+          2:
+            effect: "REGENERATION"
+            amplifier: 0
 permissions:
   mob_head_drops: "headhunting.mob_head_drops"
   redeem: "headhunting.redeem"
@@ -293,4 +419,3 @@ database:
   database: ""
   username: ""
   password: ""
-
