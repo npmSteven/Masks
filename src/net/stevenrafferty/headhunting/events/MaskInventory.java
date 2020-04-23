@@ -1,9 +1,12 @@
 package net.stevenrafferty.headhunting.events;
 
+import net.milkbowl.vault.economy.Economy;
 import net.stevenrafferty.headhunting.Main;
 import net.stevenrafferty.headhunting.utils.Helper;
 import net.stevenrafferty.headhunting.utils.ItemStacks;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -49,19 +52,26 @@ public class MaskInventory implements Listener {
             ItemStack mask = itemStacks.maskItemStack(creature, tier, false);
 
             int tokensRequired = plugin.getConfig().getInt("creatures." + creature + ".masks." + tier + ".token.required");
+            int moneyRequired = plugin.getConfig().getInt("creatures." + creature + ".masks." + tier + ".money.required");
 
             // check if inventory contains creature tokens
             // get the creature tokens required amount
             // check if the inventory contains enough tokens to satisfy the required amount
             boolean hasEnoughTokens = checkHasEnoughTokens(tokensRequired, player, token);
+            boolean hasEnoughMoney = checkHasEnoughMoney(player, moneyRequired);
 
             // if all of the above checks pass then remove the token from the players inventory
             // Send them the mask
-            if (hasEnoughTokens) {
+            if (hasEnoughTokens && hasEnoughMoney) {
                 String giveMaskMessage = helper.getConfigMessage("messages.give_mask_message");
 
                 // Remove token
                 helper.removeTokens(playerInventory, token, tokensRequired);
+
+                // Remove money
+                Economy economy = Main.getEconomy();
+                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(player.getUniqueId());
+                economy.withdrawPlayer(offlinePlayer, moneyRequired);
 
                 // Give mask
                 playerInventory.addItem(mask);
@@ -99,6 +109,21 @@ public class MaskInventory implements Listener {
             player.sendMessage(notEnoughTokens);
             return false;
         }
+    }
+
+    public boolean checkHasEnoughMoney(Player player, int requiredAmount) {
+
+        Economy economy = Main.getEconomy();
+
+        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(player.getUniqueId());
+
+        double balance = economy.getBalance(offlinePlayer);
+
+        if (balance >= requiredAmount) {
+            return true;
+        }
+        player.sendMessage("not enough money");
+        return false;
     }
 
 }

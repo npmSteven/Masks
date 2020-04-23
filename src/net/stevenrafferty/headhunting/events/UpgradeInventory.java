@@ -3,9 +3,11 @@ package net.stevenrafferty.headhunting.events;
 import net.milkbowl.vault.economy.Economy;
 import net.stevenrafferty.headhunting.Main;
 import net.stevenrafferty.headhunting.utils.Helper;
+import net.stevenrafferty.headhunting.utils.ItemStacks;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,9 +26,9 @@ public class UpgradeInventory implements Listener {
 
     Plugin plugin = Main.getPlugin(Main.class);
 
-    Economy economy = Main.getEconomy();
-
     Helper helper = new Helper();
+
+    ItemStacks itemStacks = new ItemStacks();
 
     String upgradeInventoryName = helper.getConfigMessage("options.upgrade_inventory_name");
 
@@ -97,26 +99,48 @@ public class UpgradeInventory implements Listener {
 
                     String tierPath = "creatures." + creature + ".masks." + nextTier;
                     String tierName = helper.getConfigMessage(tierPath + ".name");
+                    int amountRequired = plugin.getConfig().getInt(tierPath + ".money.required");
+                    int tokenRequired = plugin.getConfig().getInt(tierPath + ".token.required");
 
                     if (tierName != null) {
 
-                        // Subtract tokens and money
-                        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(player.getUniqueId());
-                        System.out.print("economy: " + economy);
+                        ItemStack token = itemStacks.tokenItemStack(creature, false);
 
-//                        List<String> lore = new ArrayList<>();
-//                        lore.add(0, helper.convertToInvisibleString(creature + "_" + nextTier));
-//                        lore.add(1, tierName);
-//                        helmetMeta.setLore(lore);
-//                        helmet.setItemMeta(helmetMeta);
-//
-//                        player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 0);
-//
-//                        String upgradedMask = helper.getConfigMessage("messages.upgraded_mask");
-//                        player.sendMessage(upgradedMask);
-//
-//                        // Update requirements
-//                        updateRequirements(Integer.toString(nextTier), creature, event);
+
+                        boolean hasEnoughMoney = checkHasEnoughMoney(player, amountRequired);
+                        boolean hasEnoughTokens = checkHasEnoughTokens(tokenRequired, player, token);
+
+                        if (hasEnoughMoney && hasEnoughTokens) {
+                            // Remove token
+                            helper.removeTokens(player.getInventory(), token, tokenRequired);
+
+                            // Code to take money
+                            Economy economy = Main.getEconomy();
+                            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(player.getUniqueId());
+                            economy.withdrawPlayer(offlinePlayer, amountRequired);
+
+                            // Update mask with new tier
+                            List<String> lore = new ArrayList<>();
+                            lore.add(0, helper.convertToInvisibleString(creature + "_" + nextTier));
+                            lore.add(1, tierName);
+                            helmetMeta.setLore(lore);
+                            helmet.setItemMeta(helmetMeta);
+
+                            // Play sound
+                            player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 0);
+
+                            // Send message to player
+                            String upgradedMask = helper.getConfigMessage("messages.upgraded_mask");
+                            player.sendMessage(upgradedMask);
+
+                            // Update requirements
+                            updateRequirements(Integer.toString(nextTier), creature, event);
+                        }
+
+
+
+                        // only run when we have enough tokens and money
+
                     } else {
                         String maskMaxTier = helper.getConfigMessage("messages.mask_max_tier");
                         player.sendMessage(maskMaxTier);
@@ -241,6 +265,52 @@ public class UpgradeInventory implements Listener {
             ItemMeta upgradeMeta = upgrade.getItemMeta();
             upgradeMeta.setLore(lore);
             upgrade.setItemMeta(upgradeMeta);
+        }
+    }
+
+    public boolean checkHasEnoughMoney(Player player, int requiredAmount) {
+
+        Economy economy = Main.getEconomy();
+
+        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(player.getUniqueId());
+
+        double balance = economy.getBalance(offlinePlayer);
+
+        if (balance >= requiredAmount) {
+            return true;
+        }
+        player.sendMessage("not enough money");
+        return false;
+    }
+
+    public boolean checkHasEnoughTokens(int tokensRequired, Player player, ItemStack token) {
+        Inventory playerInventory = player.getInventory();
+        ItemStack[] contents = playerInventory.getContents();
+
+        ItemMeta tokenMeta = token.getItemMeta();
+
+        int tokenAmount = 0;
+        for (int i = 0; i < contents.length; i ++) {
+            ItemStack content = contents[i];
+            if (content != null && content.hasItemMeta() && content.getType().equals(Material.NETHER_STAR)) {
+                ItemMeta contentMeta = content.getItemMeta();
+                if (contentMeta.hasDisplayName()) {
+                    if (contentMeta.getDisplayName().equals(tokenMeta.getDisplayName()) && contentMeta.hasLore()) {
+                        tokenAmount += content.getAmount();
+                    }
+                }
+            }
+            if (tokenAmount == tokensRequired) {
+                break;
+            }
+        }
+        String notEnoughTokens = helper.getConfigMessage("messages.not_enough_tokens");
+
+        if (tokenAmount >= tokensRequired) {
+            return true;
+        } else {
+            player.sendMessage(notEnoughTokens);
+            return false;
         }
     }
 

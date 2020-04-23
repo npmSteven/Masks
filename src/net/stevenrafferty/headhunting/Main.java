@@ -1,23 +1,21 @@
 package net.stevenrafferty.headhunting;
 
+import net.milkbowl.vault.economy.Economy;
 import net.stevenrafferty.headhunting.commands.*;
 import net.stevenrafferty.headhunting.events.*;
 import net.stevenrafferty.headhunting.utils.Database;
 import net.stevenrafferty.headhunting.utils.Helper;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
-import net.milkbowl.vault.economy.Economy;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.SQLException;
 import java.util.logging.Logger;
 
 public class Main extends JavaPlugin {
 
-  private static final Logger log = Logger.getLogger("Minecraft");
-  public static Economy econ = null;
+  private static Economy econ = null;
 
   @Override
   public void onEnable() {
@@ -41,11 +39,6 @@ public class Main extends JavaPlugin {
     loadConfig();
     removeMaterials();
 
-    // Economy
-    if(!setupEconomy()){
-      Bukkit.shutdown();
-    }
-
     // Connect to db
     Database database = new Database();
 
@@ -55,6 +48,11 @@ public class Main extends JavaPlugin {
       error.printStackTrace();
     } catch (SQLException error) {
       error.printStackTrace();
+    }
+
+    if (!setupEconomy()) {
+      System.out.println("No economy plugin found. Disabling Vault");
+      getServer().getPluginManager().disablePlugin(this);
     }
 
   }
@@ -75,11 +73,15 @@ public class Main extends JavaPlugin {
   }
 
   private boolean setupEconomy() {
-    RegisteredServiceProvider<Economy> economyProviter = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
-    if(economyProviter != null) {
-      econ = economyProviter.getProvider();
+    if (getServer().getPluginManager().getPlugin("Vault") == null) {
+      return false;
     }
-    return (econ != null);
+    RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+    if (rsp == null) {
+      return false;
+    }
+    econ = rsp.getProvider();
+    return econ != null;
   }
 
   public static Economy getEconomy() {
