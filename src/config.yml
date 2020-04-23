@@ -413,6 +413,7 @@ messages:
         &6/redeem: &fGives the players a token in exchange for mob heads, xp and tokens\n
         &6/souls: &fTells the player how many souls they have\n
         &6/mask: &fGives the player a mask in exchange for tokens and money\n
+        &6/upgrade: &fAllows the player to upgrade a mask to the next tier\n
         &6/headhunting: &fTells the player all of the available commands\n"
 options:
   token_inventory_name: "&2Tokens"
@@ -420,6 +421,7 @@ options:
   upgrade_inventory_name: "&2Upgrade Mask"
   close_inventory: "&4Close"
   upgrade_inventory: "&2Upgrade Mask"
+  max_tier: "&4Max tier"
 database:
   host: "localhost"
   port: 3306

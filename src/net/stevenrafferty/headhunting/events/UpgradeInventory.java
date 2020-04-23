@@ -260,7 +260,7 @@ public class UpgradeInventory implements Listener {
             String upgradeText = helper.getConfigMessage("options.upgrade_inventory");
 
             List<String> lore = new ArrayList<>();
-            lore.add("Max tier");
+            lore.add(helper.getConfigMessage("options.max_tier"));
             ItemStack upgrade = findLoopedItemStack(event.getInventory().getContents(), upgradeText);
             ItemMeta upgradeMeta = upgrade.getItemMeta();
             upgradeMeta.setLore(lore);
