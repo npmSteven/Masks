@@ -13,12 +13,13 @@
 * /souls - Tells the player how many souls they have collected
 * /mask - Exchanges tokens for a mask
 * /headhunting | /hh - Shows the available commands
-
+* /upgrade - Allows the player to upgrade a mask to the next tier
 ## Permissions
 * headhunting.mob_head_drops - This will allow heads dropping for that player
 * headhunting.redeem - Allows the player to use /redeem
 * headhunting.souls -Allows the player to use /souls
 * headhunting.mask - Allows the player to use /mask
+* headhunting.upgrade - Allows the player to use /upgrade
 
 ## Releases
 * [Download](https://github.com/StevenRafferty/HeadHunting/releases)
