@@ -3,7 +3,6 @@
     <output-path>$PROJECT_DIR$/../../mc_server/plugins</output-path>
     <root id="archive" name="HeadHunting.jar">
       <element id="module-output" name="HeadHunting" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../../minecarftdep/spigot-1.8.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
