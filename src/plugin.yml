@@ -14,6 +14,9 @@ commands:
   mask:
     description: Exchange tokens and money for Masks
     usage: /mask
+  upgrade:
+    description: Upgrades mask to the next tier
+    usage: /upgrade
   headhunting:
     description: Lists all of the avaliable commands
     usage: /headhunting

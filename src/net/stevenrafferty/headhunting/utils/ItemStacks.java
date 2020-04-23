@@ -2,6 +2,7 @@ package net.stevenrafferty.headhunting.utils;
 
 import net.stevenrafferty.headhunting.Main;
 import org.bukkit.ChatColor;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Creature;
 import org.bukkit.inventory.ItemFlag;
@@ -97,6 +98,37 @@ public class ItemStacks {
         token.setItemMeta(tokenMeta);
 
         return token;
+    }
+
+    public ItemStack upgradeItemStack() {
+        String upgradeText = helper.getConfigMessage("options.upgrade_inventory");
+
+        ItemStack upgrade = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 13);
+        ItemMeta upgradeMeta = upgrade.getItemMeta();
+        upgradeMeta.setDisplayName(upgradeText);
+        upgradeMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        upgrade.setItemMeta(upgradeMeta);
+        return upgrade;
+    }
+
+    public ItemStack emptyItemStack() {
+        ItemStack empty = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 7);
+        ItemMeta emptyMeta = empty.getItemMeta();
+        emptyMeta.setDisplayName(" ");
+        emptyMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        empty.setItemMeta(emptyMeta);
+        return empty;
+    }
+
+    public ItemStack closeItemStack() {
+        String close = helper.getConfigMessage("options.close_inventory");
+
+        ItemStack closeItem = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 14);
+        ItemMeta closeItemMeta = closeItem.getItemMeta();
+        closeItemMeta.setDisplayName(close);
+        closeItemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        closeItem.setItemMeta(closeItemMeta);
+        return closeItem;
     }
 
 }

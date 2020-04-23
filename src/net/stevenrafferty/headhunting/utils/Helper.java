@@ -88,7 +88,11 @@ public class Helper {
     }
 
     public String getConfigMessage(String path) {
-        return plugin.getConfig().getString(path).replaceAll("(&([a-f0-9]))", "\u00A7$2");
+        String message = plugin.getConfig().getString(path);
+        if (message != null) {
+            return plugin.getConfig().getString(path).replaceAll("(&([a-f0-9]))", "\u00A7$2");
+        }
+        return null;
     }
 
     public String[] getItemMetaInfo(ItemMeta itemMeta) {
