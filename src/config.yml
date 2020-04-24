@@ -409,6 +409,7 @@ messages:
   add_mask_to_slot: "&4Place mask in the slot to upgrade"
   mask_max_tier: "&4Your mask is already the highest tier"
   upgraded_mask: "&2Upgraded Mask"
+  not_enough_money: "&4Not enough money"
   help: "&6HeadHunting - Commands\n
         &6/redeem: &fGives the players a token in exchange for mob heads, xp and tokens\n
         &6/souls: &fTells the player how many souls they have\n

@@ -48,13 +48,17 @@ public class UpgradeInventory implements Listener {
         // Check if player clicked there inventory
         if (clickedInventory.getType() == InventoryType.PLAYER && player.getOpenInventory().getTitle().equals(upgradeInventoryName)) {
             ItemStack mask = player.getOpenInventory().getItem(4);
-            // Check if player has click a mask
-            if (hasHelmet(item) && mask.getType() == Material.AIR) {
+
+            // Check if player has clicked a mask
+            if (isMask(item) && mask.getType() == Material.AIR) {
+
                 // add mask to menu
                 player.getOpenInventory().setItem(4, item);
                 clickedInventory.removeItem(item);
 
                 ItemMeta itemMeta = item.getItemMeta();
+
+                // Get item data
                 String[] creatureLore = helper.getItemMetaInfo(itemMeta);
                 String creature = creatureLore[0];
                 String tier = creatureLore[1];
@@ -62,11 +66,10 @@ public class UpgradeInventory implements Listener {
                 updateRequirements(tier, creature, event);
             }
         } else if (clickedInventory.getTitle().equals(upgradeInventoryName)) {
-            // Check if player has click a mas
-            ItemStack mask = player.getOpenInventory().getItem(4);
-            if (hasHelmet(mask)) {
-                clickedInventory.removeItem(mask);
-                player.getInventory().addItem(mask);
+            // Check if player has click a mask
+            if (isMask(item)) {
+                clickedInventory.removeItem(item);
+                player.getInventory().addItem(item);
 
                 String upgradeText = helper.getConfigMessage("options.upgrade_inventory");
 
@@ -89,33 +92,39 @@ public class UpgradeInventory implements Listener {
             if (foundItemUpgrade != null) {
                 // Check if helmet is there
                 ItemStack helmet = clickedInventory.getItem(4);
-                if (hasHelmet(helmet)) {
+                if (isMask(helmet)) {
                     ItemMeta helmetMeta = helmet.getItemMeta();
+
+                    // Get item data
                     String[] creatureLore = helper.getItemMetaInfo(helmetMeta);
                     String creature = creatureLore[0];
                     String tier = creatureLore[1];
 
+                    // Update to next tier for info
                     int nextTier = Integer.parseInt(tier);
                     nextTier = nextTier + 1;
 
                     String tierPath = "creatures." + creature + ".masks." + nextTier;
                     String tierName = helper.getConfigMessage(tierPath + ".name");
-                    int amountRequired = plugin.getConfig().getInt(tierPath + ".money.required");
-                    int tokenRequired = plugin.getConfig().getInt(tierPath + ".token.required");
 
+                    // Get the money and tokens required
+                    int moneyRequired = plugin.getConfig().getInt(tierPath + ".money.required");
+                    int tokensRequired = plugin.getConfig().getInt(tierPath + ".token.required");
+
+                    // Check if the tier exists
                     if (tierName != null) {
 
                         ItemStack token = itemStacks.tokenItemStack(creature, false);
 
-                        if (checkHasEnoughMoney(player, amountRequired)) {
-                            if (checkHasEnoughTokens(tokenRequired, player, token)) {
+                        if (checkHasEnoughMoney(player, moneyRequired)) {
+                            if (checkHasEnoughTokens(tokensRequired, player, token)) {
                                 // Remove token
-                                helper.removeTokens(player.getInventory(), token, tokenRequired);
+                                helper.removeTokens(player.getInventory(), token, tokensRequired);
 
                                 // Remove money
                                 Economy economy = Main.getEconomy();
                                 OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(player.getUniqueId());
-                                economy.withdrawPlayer(offlinePlayer, amountRequired);
+                                economy.withdrawPlayer(offlinePlayer, moneyRequired);
 
                                 // Update mask with new tier
                                 List<String> lore = new ArrayList<>();
@@ -136,10 +145,6 @@ public class UpgradeInventory implements Listener {
                             }
                         }
 
-
-
-                        // only run when we have enough tokens and money
-
                     } else {
                         String maskMaxTier = helper.getConfigMessage("messages.mask_max_tier");
                         player.sendMessage(maskMaxTier);
@@ -155,7 +160,7 @@ public class UpgradeInventory implements Listener {
 
             if (foundItemClose != null && player.getOpenInventory().getTitle().equals(upgradeInventoryName)) {
                 ItemStack helmet = clickedInventory.getItem(4);
-                if (hasHelmet(helmet)) {
+                if (isMask(helmet)) {
                     clickedInventory.removeItem(helmet);
                     player.getInventory().addItem(helmet);
                 }
@@ -170,7 +175,7 @@ public class UpgradeInventory implements Listener {
         Player player = (Player) event.getPlayer();
         if (closedInventory.getTitle().equals(upgradeInventoryName)) {
             ItemStack helmet = closedInventory.getItem(4);
-            if (hasHelmet(helmet)) {
+            if (isMask(helmet)) {
                 Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                     @Override
                     public void run() {
@@ -181,8 +186,8 @@ public class UpgradeInventory implements Listener {
         }
     }
 
-    public boolean hasHelmet(ItemStack helmet) {
-        boolean hasHelmet = false;
+    public boolean isMask(ItemStack helmet) {
+        boolean isMask = false;
         if (helmet != null) {
             if (helmet.hasItemMeta()) {
                 ItemMeta helmetMeta = helmet.getItemMeta();
@@ -192,13 +197,13 @@ public class UpgradeInventory implements Listener {
                         String creature = creatureLore[0];
                         String tier = creatureLore[1];
                         if (creature != null && tier != null) {
-                            hasHelmet = true;
+                            isMask = true;
                         }
                     }
                 }
             }
         }
-        return hasHelmet;
+        return isMask;
     }
 
     public ItemStack findItemStack(ItemStack item, String name) {

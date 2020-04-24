@@ -32,7 +32,6 @@ public class Mask implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        System.out.print("I am here");
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (player.hasPermission(masksPermission)) {

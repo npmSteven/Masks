@@ -30,32 +30,38 @@ public class MaskInventory implements Listener {
         Player player = (Player) event.getWhoClicked();
 
         Inventory clickedInventory = event.getClickedInventory();
+
         ItemStack item = event.getCurrentItem();
-        if (clickedInventory == null) {
-            return;
-        }
+
+        if (clickedInventory == null) return;
+
         if (player.getOpenInventory().getTitle().equals(maskInventoryName)) {
             event.setCancelled(true);
         }
+
+        // Check if the event was clicked inside the mask inventory
         if (clickedInventory.getName().equals(maskInventoryName)) {
+
+            // Check if the click item exists
             if (item == null || !item.hasItemMeta() || item.getType().equals(Material.AIR)) {
                 return;
             }
+
             Inventory playerInventory = player.getInventory();
             ItemMeta itemMeta = item.getItemMeta();
 
+            // Get item data
             String[] creatureLore = helper.getItemMetaInfo(itemMeta);
             String creature = creatureLore[0];
             String tier = creatureLore[1];
 
+
             ItemStack token = itemStacks.tokenItemStack(creature, false);
             ItemStack mask = itemStacks.maskItemStack(creature, tier, false);
-            System.out.print(creature);
+
             int tokensRequired = plugin.getConfig().getInt("creatures." + creature + ".masks." + tier + ".token.required");
             int moneyRequired = plugin.getConfig().getInt("creatures." + creature + ".masks." + tier + ".money.required");
 
-            // if all of the above checks pass then remove the token from the players inventory
-            // Send them the mask
             if (checkHasEnoughTokens(tokensRequired, player, token)) {
                 if (checkHasEnoughMoney(player, moneyRequired)) {
                     String giveMaskMessage = helper.getConfigMessage("messages.give_mask_message");
@@ -82,6 +88,7 @@ public class MaskInventory implements Listener {
 
         ItemMeta tokenMeta = token.getItemMeta();
 
+        // Loop through the players contents and check how many tokens they have
         int tokenAmount = 0;
         for (int i = 0; i < contents.length; i ++) {
             ItemStack content = contents[i];
@@ -97,6 +104,7 @@ public class MaskInventory implements Listener {
                 break;
             }
         }
+
         String notEnoughTokens = helper.getConfigMessage("messages.not_enough_tokens");
 
         if (tokenAmount >= tokensRequired) {
@@ -118,7 +126,7 @@ public class MaskInventory implements Listener {
         if (balance >= requiredAmount) {
             return true;
         }
-        player.sendMessage("not enough money");
+        player.sendMessage(helper.getConfigMessage("messages.not_enough_money"));
         return false;
     }
 
