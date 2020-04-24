@@ -27,12 +27,22 @@ public class MobHeadDrop implements Listener {
   // Check if entity is dead and if so we will drop a head
   @EventHandler
   public void onEntityDeath(EntityDeathEvent event) {
+    // Check if the dead entity is an instance of Creature
     if (event.getEntity() instanceof Creature) {
+
       Creature killed = (Creature) event.getEntity();
+
+      // Check if the killer is an instanceof player
       if (killed.getKiller() instanceof Player) {
         Player player = killed.getKiller();
+
+        // Check if the user has the permission to use this event
         if (player.hasPermission(mob_head_drops)) {
+          System.out.print(killed.getName());
+          // Check if we should drop the mob head
           if (shouldDropMobHead(killed.getType())) {
+
+            // Validate that the entity is dead
             if ((killed.isDead() || killed.getHealth() <= 0) && mobHeads.isValid(killed.getName())) {
               String creature = killed.getType().toString().toLowerCase();
               ItemStack skull = itemStacks.skullItemStack(creature);

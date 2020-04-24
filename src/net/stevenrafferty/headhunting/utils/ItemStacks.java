@@ -54,7 +54,7 @@ public class ItemStacks {
         helmetMeta.setDisplayName(name);
 
         List<String> lore = new ArrayList<>();
-        lore.add(helper.convertToInvisibleString(creature + "_" + tier));
+        lore.add(helper.convertToInvisibleString(creature + "-" + tier));
         lore.add(loreTier);
         if (hasLore) {
             lore.add(tokenName + tokensRequired);

@@ -35,9 +35,9 @@ public class TokensInventory implements Listener {
 
         Inventory clickedInventory = event.getClickedInventory();
         ItemStack item = event.getCurrentItem();
-        if (clickedInventory == null) {
-            return;
-        }
+
+        if (clickedInventory == null) return;
+
         if (player.getOpenInventory().getTitle().equals(tokenInventoryName)) {
             event.setCancelled(true);
         }
@@ -48,9 +48,15 @@ public class TokensInventory implements Listener {
             }
             Inventory playerInventory = player.getInventory();
             ItemMeta itemMeta = item.getItemMeta();
+
+            // Get the creature from the item data
             String creature = helper.convertToVisibleString(itemMeta.getLore().get(0));
+
             ItemStack skull = itemStacks.skullItemStack(creature);
+
             String giveTokenMessage = helper.getConfigMessage("messages.give_token_message");
+
+            // Check config for the souls and heads required to obtain a token
             int headsRequired = plugin.getConfig().getInt("creatures." + creature + ".token.heads.required");
             int soulsRequired = plugin.getConfig().getInt("creatures." + creature + ".token.souls.required");
 

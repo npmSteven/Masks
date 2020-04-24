@@ -28,23 +28,34 @@ public class MaskEffects implements Listener {
         ItemStack previousItem = event.getOldArmorPiece();
         Player player = event.getPlayer();
 
-        // Remove potion effect that was being applied from the previous mask
+        // Remove potion effect when the player removes there mask
         if (previousItem != null) {
             if (previousItem.getType() == Material.DIAMOND_HELMET && previousItem.hasItemMeta()) {
                 ItemMeta previousItemMeta = previousItem.getItemMeta();
                 if (previousItemMeta.hasLore()) {
+
+                    // Get item data
                     String[] creatureLore = helper.getItemMetaInfo(previousItemMeta);
                     String creature = creatureLore[0];
                     String tier = creatureLore[1];
+
+                    // Check if item data exists
                     if (creature != null && tier != null) {
+
+                        // Get all of the available effects from config.yml
                         String effectsPath = "creatures." + creature + ".masks." + tier + ".effects";
                         Set<String> effects = plugin.getConfig().getConfigurationSection(effectsPath).getKeys(false);
+
+                        // Loop through all of the available effects and apply them to the player
                         for (String number : effects) {
+
                             String effect = plugin.getConfig().getString(effectsPath + "." + number + ".effect");
                             PotionEffectType type = PotionEffectType.getByName(effect.toUpperCase());
                             if (type == null) {
                                 continue;
                             }
+
+                            // Remove potion effects that was applied from previous mask
                             if (player.hasPotionEffect(type)) {
                                 player.removePotionEffect(type);
                             }
@@ -53,27 +64,45 @@ public class MaskEffects implements Listener {
                 }
             }
         }
+
+        // Apply effects when the player puts a mask on
         if (currentItem != null) {
             // Apply potion effects to do with mask
             if (currentItem.getType() == Material.DIAMOND_HELMET && currentItem.hasItemMeta()) {
                 ItemMeta itemMeta = currentItem.getItemMeta();
                 if (itemMeta.hasLore()) {
+
+                    // Get item data
                     String[] creatureLore = helper.getItemMetaInfo(itemMeta);
                     String creature = creatureLore[0];
                     String tier = creatureLore[1];
+
+                    // Check if item data exists
                     if (creature != null && tier != null) {
+
+                        // Get all of the available effects from config.yml
                         String effectsPath = "creatures." + creature + ".masks." + tier + ".effects";
                         Set<String> effects = plugin.getConfig().getConfigurationSection(effectsPath).getKeys(false);
+
+                        // Loop through all of the available effects and apply them to the player
                         for (String number : effects) {
+
+                            // Get the effect to apply and the amplifier
                             String effect = plugin.getConfig().getString(effectsPath + "." + number + ".effect");
                             int amplifier = plugin.getConfig().getInt(effectsPath + "." + number + ".amplifier");
+
                             PotionEffectType type = PotionEffectType.getByName(effect.toUpperCase());
+
                             if (type == null) {
                                 continue;
                             }
+
+                            // Ensure we remove the effect just in-case the user already has this effect applied
                             if (player.hasPotionEffect(type)) {
                                 player.removePotionEffect(type);
                             }
+
+                            // Apply effect to player
                             PotionEffect buildEffect = type.createEffect(Integer.MAX_VALUE, amplifier);
                             player.addPotionEffect(buildEffect);
                         }

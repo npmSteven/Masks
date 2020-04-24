@@ -1,7 +1,6 @@
 package net.stevenrafferty.headhunting.utils;
 
 import net.stevenrafferty.headhunting.Main;
-import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Set;
@@ -15,7 +14,7 @@ public class MobHeads {
     boolean hasType = false;
     for (Object key : creatures) {
       String creature = key.toString().toLowerCase();
-      name = name.toLowerCase();
+      name = name.replaceAll(" ", "_").toLowerCase();
       if (name.equals(creature)) {
         hasType = true;
         break;
