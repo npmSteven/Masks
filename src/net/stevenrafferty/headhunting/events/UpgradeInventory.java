@@ -62,10 +62,11 @@ public class UpgradeInventory implements Listener {
                 updateRequirements(tier, creature, event);
             }
         } else if (clickedInventory.getTitle().equals(upgradeInventoryName)) {
-            // Check if player has click a mask
-            if (hasHelmet(item)) {
-                clickedInventory.removeItem(item);
-                player.getInventory().addItem(item);
+            // Check if player has click a mas
+            ItemStack mask = player.getOpenInventory().getItem(4);
+            if (hasHelmet(mask)) {
+                clickedInventory.removeItem(mask);
+                player.getInventory().addItem(mask);
 
                 String upgradeText = helper.getConfigMessage("options.upgrade_inventory");
 
@@ -106,35 +107,33 @@ public class UpgradeInventory implements Listener {
 
                         ItemStack token = itemStacks.tokenItemStack(creature, false);
 
+                        if (checkHasEnoughMoney(player, amountRequired)) {
+                            if (checkHasEnoughTokens(tokenRequired, player, token)) {
+                                // Remove token
+                                helper.removeTokens(player.getInventory(), token, tokenRequired);
 
-                        boolean hasEnoughMoney = checkHasEnoughMoney(player, amountRequired);
-                        boolean hasEnoughTokens = checkHasEnoughTokens(tokenRequired, player, token);
+                                // Remove money
+                                Economy economy = Main.getEconomy();
+                                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(player.getUniqueId());
+                                economy.withdrawPlayer(offlinePlayer, amountRequired);
 
-                        if (hasEnoughMoney && hasEnoughTokens) {
-                            // Remove token
-                            helper.removeTokens(player.getInventory(), token, tokenRequired);
+                                // Update mask with new tier
+                                List<String> lore = new ArrayList<>();
+                                lore.add(0, Helper.convertToInvisibleString(creature + "-" + nextTier));
+                                lore.add(1, tierName);
+                                helmetMeta.setLore(lore);
+                                helmet.setItemMeta(helmetMeta);
 
-                            // Code to take money
-                            Economy economy = Main.getEconomy();
-                            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(player.getUniqueId());
-                            economy.withdrawPlayer(offlinePlayer, amountRequired);
+                                // Play sound
+                                player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 0);
 
-                            // Update mask with new tier
-                            List<String> lore = new ArrayList<>();
-                            lore.add(0, helper.convertToInvisibleString(creature + "_" + nextTier));
-                            lore.add(1, tierName);
-                            helmetMeta.setLore(lore);
-                            helmet.setItemMeta(helmetMeta);
+                                // Send message to player
+                                String upgradedMask = helper.getConfigMessage("messages.upgraded_mask");
+                                player.sendMessage(upgradedMask);
 
-                            // Play sound
-                            player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 0);
-
-                            // Send message to player
-                            String upgradedMask = helper.getConfigMessage("messages.upgraded_mask");
-                            player.sendMessage(upgradedMask);
-
-                            // Update requirements
-                            updateRequirements(Integer.toString(nextTier), creature, event);
+                                // Update requirements
+                                updateRequirements(Integer.toString(nextTier), creature, event);
+                            }
                         }
 
 

@@ -393,7 +393,7 @@ permissions:
   mob_head_drops: "headhunting.mob_head_drops"
   redeem: "headhunting.redeem"
   souls: "headhunting.souls"
-  mask: "headhunting.mask"
+  masks: "headhunting.masks"
   upgrade: "headhunting.upgrade"
 messages:
   no_permissions_message: "&4No permissions"
@@ -412,7 +412,7 @@ messages:
   help: "&6HeadHunting - Commands\n
         &6/redeem: &fGives the players a token in exchange for mob heads, xp and tokens\n
         &6/souls: &fTells the player how many souls they have\n
-        &6/mask: &fGives the player a mask in exchange for tokens and money\n
+        &6/masks: &fGives the player a mask in exchange for tokens and money\n
         &6/upgrade: &fAllows the player to upgrade a mask to the next tier\n
         &6/headhunting: &fTells the player all of the available commands\n"
 options:

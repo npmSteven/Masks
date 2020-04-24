@@ -50,32 +50,28 @@ public class MaskInventory implements Listener {
 
             ItemStack token = itemStacks.tokenItemStack(creature, false);
             ItemStack mask = itemStacks.maskItemStack(creature, tier, false);
-
+            System.out.print(creature);
             int tokensRequired = plugin.getConfig().getInt("creatures." + creature + ".masks." + tier + ".token.required");
             int moneyRequired = plugin.getConfig().getInt("creatures." + creature + ".masks." + tier + ".money.required");
 
-            // check if inventory contains creature tokens
-            // get the creature tokens required amount
-            // check if the inventory contains enough tokens to satisfy the required amount
-            boolean hasEnoughTokens = checkHasEnoughTokens(tokensRequired, player, token);
-            boolean hasEnoughMoney = checkHasEnoughMoney(player, moneyRequired);
-
             // if all of the above checks pass then remove the token from the players inventory
             // Send them the mask
-            if (hasEnoughTokens && hasEnoughMoney) {
-                String giveMaskMessage = helper.getConfigMessage("messages.give_mask_message");
+            if (checkHasEnoughTokens(tokensRequired, player, token)) {
+                if (checkHasEnoughMoney(player, moneyRequired)) {
+                    String giveMaskMessage = helper.getConfigMessage("messages.give_mask_message");
 
-                // Remove token
-                helper.removeTokens(playerInventory, token, tokensRequired);
+                    // Remove token
+                    helper.removeTokens(playerInventory, token, tokensRequired);
 
-                // Remove money
-                Economy economy = Main.getEconomy();
-                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(player.getUniqueId());
-                economy.withdrawPlayer(offlinePlayer, moneyRequired);
+                    // Remove money
+                    Economy economy = Main.getEconomy();
+                    OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(player.getUniqueId());
+                    economy.withdrawPlayer(offlinePlayer, moneyRequired);
 
-                // Give mask
-                playerInventory.addItem(mask);
-                player.sendMessage(giveMaskMessage);
+                    // Give mask
+                    playerInventory.addItem(mask);
+                    player.sendMessage(giveMaskMessage);
+                }
             }
         }
     }

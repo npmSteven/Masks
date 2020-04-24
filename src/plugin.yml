@@ -11,9 +11,9 @@ commands:
   souls:
     description: Tells you how many souls you have collected
     usage: /souls
-  mask:
+  masks:
     description: Exchange tokens and money for Masks
-    usage: /mask
+    usage: /masks
   upgrade:
     description: Upgrades mask to the next tier
     usage: /upgrade

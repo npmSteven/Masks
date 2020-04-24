@@ -97,7 +97,7 @@ public class Helper {
 
     public String[] getItemMetaInfo(ItemMeta itemMeta) {
         String firstLore = convertToVisibleString(itemMeta.getLore().get(0));
-        String[] creatureLore = firstLore.split("_");
+        String[] creatureLore = firstLore.split("-");
         return creatureLore;
     }
 

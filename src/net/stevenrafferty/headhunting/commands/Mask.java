@@ -22,7 +22,7 @@ public class Mask implements CommandExecutor {
 
     ItemStacks itemStacks = new ItemStacks();
 
-    String maskPermission = plugin.getConfig().getString("permissions.mask");
+    String masksPermission = plugin.getConfig().getString("permissions.masks");
     String noConsoleCommandMessage = helper.getConfigMessage("messages.no_console_command_message");
     String noPermissionsMessage = helper.getConfigMessage("messages.no_permissions_message");
 
@@ -32,9 +32,10 @@ public class Mask implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        System.out.print("I am here");
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            if (player.hasPermission(maskPermission)) {
+            if (player.hasPermission(masksPermission)) {
                 Inventory inventory = plugin.getServer().createInventory(null, 9, maskInventoryName);
 
                 int index = 0;

@@ -11,7 +11,6 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.SQLException;
-import java.util.logging.Logger;
 
 public class Main extends JavaPlugin {
 
@@ -32,7 +31,7 @@ public class Main extends JavaPlugin {
     getCommand("redeem").setExecutor(new Redeem());
     getCommand("souls").setExecutor(new Souls());
     getCommand("headhunting").setExecutor(new Help());
-    getCommand("mask").setExecutor(new Mask());
+    getCommand("masks").setExecutor(new Mask());
     getCommand("upgrade").setExecutor(new Upgrade());
 
     getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "HeadHunting: Enabled");
