@@ -35,7 +35,7 @@ public class Mask implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (player.hasPermission(masksPermission)) {
-                Inventory inventory = plugin.getServer().createInventory(null, 9, maskInventoryName);
+                Inventory inventory = plugin.getServer().createInventory(null, 18, maskInventoryName);
 
                 int index = 0;
                 for (Object key : creatures) {

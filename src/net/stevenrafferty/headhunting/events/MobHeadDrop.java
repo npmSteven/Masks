@@ -38,7 +38,7 @@ public class MobHeadDrop implements Listener {
 
         // Check if the user has the permission to use this event
         if (player.hasPermission(mob_head_drops)) {
-          System.out.print(killed.getName());
+
           // Check if we should drop the mob head
           if (shouldDropMobHead(killed.getType())) {
 

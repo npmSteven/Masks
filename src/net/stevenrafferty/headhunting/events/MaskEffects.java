@@ -1,6 +1,7 @@
 package net.stevenrafferty.headhunting.events;
 
 import com.codingforcookies.armorequip.ArmorEquipEvent;
+import de.tr7zw.nbtapi.NBTItem;
 import net.stevenrafferty.headhunting.Main;
 import net.stevenrafferty.headhunting.utils.Helper;
 import org.bukkit.Material;
@@ -35,9 +36,9 @@ public class MaskEffects implements Listener {
                 if (previousItemMeta.hasLore()) {
 
                     // Get item data
-                    String[] creatureLore = helper.getItemMetaInfo(previousItemMeta);
-                    String creature = creatureLore[0];
-                    String tier = creatureLore[1];
+                    NBTItem nbti = new NBTItem(previousItem);
+                    String creature = nbti.getString("creature");
+                    String tier = nbti.getString("tier");
 
                     // Check if item data exists
                     if (creature != null && tier != null) {
@@ -73,9 +74,9 @@ public class MaskEffects implements Listener {
                 if (itemMeta.hasLore()) {
 
                     // Get item data
-                    String[] creatureLore = helper.getItemMetaInfo(itemMeta);
-                    String creature = creatureLore[0];
-                    String tier = creatureLore[1];
+                    NBTItem nbti = new NBTItem(currentItem);
+                    String creature = nbti.getString("creature");
+                    String tier = nbti.getString("tier");
 
                     // Check if item data exists
                     if (creature != null && tier != null) {

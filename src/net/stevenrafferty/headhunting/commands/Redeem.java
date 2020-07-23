@@ -34,7 +34,7 @@ public class Redeem implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (player.hasPermission(redeemPermission)) {
-                Inventory inventory = plugin.getServer().createInventory(null, 9, tokenInventoryName);
+                Inventory inventory = plugin.getServer().createInventory(null, 18, tokenInventoryName);
 
                 int index = 0;
                 for (Object key : creatures) {

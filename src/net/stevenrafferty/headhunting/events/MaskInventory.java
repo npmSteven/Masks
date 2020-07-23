@@ -1,5 +1,6 @@
 package net.stevenrafferty.headhunting.events;
 
+import de.tr7zw.nbtapi.NBTItem;
 import net.milkbowl.vault.economy.Economy;
 import net.stevenrafferty.headhunting.Main;
 import net.stevenrafferty.headhunting.utils.Helper;
@@ -40,7 +41,7 @@ public class MaskInventory implements Listener {
         }
 
         // Check if the event was clicked inside the mask inventory
-        if (clickedInventory.getName().equals(maskInventoryName)) {
+        if (event.getView().getTitle().equals(maskInventoryName)) {
 
             // Check if the click item exists
             if (item == null || !item.hasItemMeta() || item.getType().equals(Material.AIR)) {
@@ -48,13 +49,10 @@ public class MaskInventory implements Listener {
             }
 
             Inventory playerInventory = player.getInventory();
-            ItemMeta itemMeta = item.getItemMeta();
 
-            // Get item data
-            String[] creatureLore = helper.getItemMetaInfo(itemMeta);
-            String creature = creatureLore[0];
-            String tier = creatureLore[1];
-
+            NBTItem nbti = new NBTItem(item);
+            String creature = nbti.getString("creature");
+            String tier = nbti.getString("tier");
 
             ItemStack token = itemStacks.tokenItemStack(creature, false);
             ItemStack mask = itemStacks.maskItemStack(creature, tier, false);
@@ -95,7 +93,7 @@ public class MaskInventory implements Listener {
             if (content != null && content.hasItemMeta() && content.getType().equals(Material.NETHER_STAR)) {
                 ItemMeta contentMeta = content.getItemMeta();
                 if (contentMeta.hasDisplayName()) {
-                    if (contentMeta.getDisplayName().equals(tokenMeta.getDisplayName()) && contentMeta.hasLore()) {
+                    if (contentMeta.getDisplayName().equals(tokenMeta.getDisplayName())) {
                         tokenAmount += content.getAmount();
                     }
                 }

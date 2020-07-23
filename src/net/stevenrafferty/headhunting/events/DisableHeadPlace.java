@@ -9,7 +9,7 @@ public class DisableHeadPlace implements Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
-        if (event.getBlock().getType() == Material.SKULL) {
+        if (event.getBlock().getType() == Material.PLAYER_HEAD) {
             event.setCancelled(true);
         }
     }

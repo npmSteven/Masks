@@ -1,5 +1,6 @@
 package net.stevenrafferty.headhunting.events;
 
+import de.tr7zw.nbtapi.NBTItem;
 import net.milkbowl.vault.economy.Economy;
 import net.stevenrafferty.headhunting.Main;
 import net.stevenrafferty.headhunting.utils.Helper;
@@ -50,26 +51,25 @@ public class UpgradeInventory implements Listener {
             ItemStack mask = player.getOpenInventory().getItem(4);
 
             // Check if player has clicked a mask
-            if (isMask(item) && mask.getType() == Material.AIR) {
+            if (isMask(item) && mask == null) {
 
                 // add mask to menu
                 player.getOpenInventory().setItem(4, item);
                 clickedInventory.removeItem(item);
 
-                ItemMeta itemMeta = item.getItemMeta();
-
                 // Get item data
-                String[] creatureLore = helper.getItemMetaInfo(itemMeta);
-                String creature = creatureLore[0];
-                String tier = creatureLore[1];
+                NBTItem nbti = new NBTItem(item);
+                String creature = nbti.getString("creature");
+                String tier = nbti.getString("tier");
 
                 updateRequirements(tier, creature, event);
             }
-        } else if (clickedInventory.getTitle().equals(upgradeInventoryName)) {
+        } else if (event.getView().getTitle().equals(upgradeInventoryName)) {
+            ItemStack mask = clickedInventory.getItem(4);
             // Check if player has click a mask
-            if (isMask(item)) {
-                clickedInventory.removeItem(item);
-                player.getInventory().addItem(item);
+            if (mask != null) {
+                clickedInventory.removeItem(mask);
+                player.getInventory().addItem(mask);
 
                 String upgradeText = helper.getConfigMessage("options.upgrade_inventory");
 
@@ -82,7 +82,7 @@ public class UpgradeInventory implements Listener {
         }
 
 
-        if (clickedInventory.getTitle().equals(upgradeInventoryName)) {
+        if (event.getView().getTitle().equals(upgradeInventoryName)) {
             String closeInventory = helper.getConfigMessage("options.close_inventory");
             String upgradeInventory = helper.getConfigMessage("options.upgrade_inventory");
 
@@ -96,9 +96,9 @@ public class UpgradeInventory implements Listener {
                     ItemMeta helmetMeta = helmet.getItemMeta();
 
                     // Get item data
-                    String[] creatureLore = helper.getItemMetaInfo(helmetMeta);
-                    String creature = creatureLore[0];
-                    String tier = creatureLore[1];
+                    NBTItem nbti = new NBTItem(helmet);
+                    String creature = nbti.getString("creature");
+                    String tier = nbti.getString("tier");
 
                     // Update to next tier for info
                     int nextTier = Integer.parseInt(tier);
@@ -128,13 +128,12 @@ public class UpgradeInventory implements Listener {
 
                                 // Update mask with new tier
                                 List<String> lore = new ArrayList<>();
-                                lore.add(0, Helper.convertToInvisibleString(creature + "-" + nextTier));
-                                lore.add(1, tierName);
+                                lore.add(0, tierName);
                                 helmetMeta.setLore(lore);
                                 helmet.setItemMeta(helmetMeta);
 
                                 // Play sound
-                                player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 0);
+                                player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 0);
 
                                 // Send message to player
                                 String upgradedMask = helper.getConfigMessage("messages.upgraded_mask");
@@ -173,7 +172,7 @@ public class UpgradeInventory implements Listener {
     public void onInventoryClose(InventoryCloseEvent event) {
         Inventory closedInventory = event.getInventory();
         Player player = (Player) event.getPlayer();
-        if (closedInventory.getTitle().equals(upgradeInventoryName)) {
+        if (event.getView().getTitle().equals(upgradeInventoryName)) {
             ItemStack helmet = closedInventory.getItem(4);
             if (isMask(helmet)) {
                 Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
@@ -192,13 +191,12 @@ public class UpgradeInventory implements Listener {
             if (helmet.hasItemMeta()) {
                 ItemMeta helmetMeta = helmet.getItemMeta();
                 if (helmetMeta.hasDisplayName() && helmetMeta.hasLore()) {
-                    String[] creatureLore = helper.getItemMetaInfo(helmetMeta);
-                    if (creatureLore.length > 1) {
-                        String creature = creatureLore[0];
-                        String tier = creatureLore[1];
-                        if (creature != null && tier != null) {
-                            isMask = true;
-                        }
+                    // Get item data
+                    NBTItem nbti = new NBTItem(helmet);
+                    String creature = nbti.getString("creature");
+                    String tier = nbti.getString("tier");
+                    if (creature != null && tier != null) {
+                        isMask = true;
                     }
                 }
             }

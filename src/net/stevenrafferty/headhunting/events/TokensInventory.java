@@ -1,5 +1,6 @@
 package net.stevenrafferty.headhunting.events;
 
+import de.tr7zw.nbtapi.NBTItem;
 import net.stevenrafferty.headhunting.Main;
 import net.stevenrafferty.headhunting.handlers.Experience;
 import net.stevenrafferty.headhunting.utils.Database;
@@ -42,15 +43,15 @@ public class TokensInventory implements Listener {
             event.setCancelled(true);
         }
 
-        if (clickedInventory.getName().equals(tokenInventoryName)) {
+        if (event.getView().getTitle().equals(tokenInventoryName)) {
             if (item == null || !item.hasItemMeta() || item.getType().equals(Material.AIR)) {
                 return;
             }
             Inventory playerInventory = player.getInventory();
-            ItemMeta itemMeta = item.getItemMeta();
 
-            // Get the creature from the item data
-            String creature = helper.convertToVisibleString(itemMeta.getLore().get(0));
+            // Get item data
+            NBTItem nbti = new NBTItem(item);
+            String creature = nbti.getString("creature");
 
             ItemStack skull = itemStacks.skullItemStack(creature);
 
@@ -90,9 +91,11 @@ public class TokensInventory implements Listener {
 
     public boolean checkPlayerHasEnoughHeads(ItemStack item, Player player) {
         Inventory playerInventory = player.getInventory();
-        ItemMeta itemMeta = item.getItemMeta();
 
-        String creature = helper.convertToVisibleString(itemMeta.getLore().get(0));
+        // Get item data
+        NBTItem nbti = new NBTItem(item);
+        String creature = nbti.getString("creature");
+
         ItemStack skull = itemStacks.skullItemStack(creature);
         SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
         ItemStack[] contents = playerInventory.getContents();
@@ -104,7 +107,7 @@ public class TokensInventory implements Listener {
         int skullAmount = 0;
         for (int i = 0; i < contents.length; i++) {
             ItemStack content = contents[i];
-            if (content != null && content.hasItemMeta() && content.getType().equals(Material.SKULL_ITEM)) {
+            if (content != null && content.hasItemMeta() && content.getType().equals(Material.PLAYER_HEAD)) {
                 SkullMeta contentMeta = (SkullMeta) content.getItemMeta();
                 if (contentMeta.hasDisplayName()) {
                     if (contentMeta.getDisplayName().equals(skullMeta.getDisplayName()) && contentMeta.getOwner().equals(skullMeta.getOwner())) {
@@ -141,8 +144,13 @@ public class TokensInventory implements Listener {
     }
 
     public boolean checkPlayerHasEnoughSouls(Player player, int soulsRequired) {
+        if (soulsRequired == 0) {
+            return true;
+        }
+
         String notEnoughSouls = helper.getConfigMessage("messages.not_enough_souls");
         String noSouls = helper.getConfigMessage("messages.no_souls");
+
         boolean hasEnoughSouls = false;
         if (database.hasPlayer(player)) {
             int souls = database.getSouls(player);
