@@ -1,4 +1,4 @@
-package net.stevenrafferty.headhunting.events;
+package net.stevenrafferty.masks.events;
 
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;

@@ -1,11 +1,8 @@
-package net.stevenrafferty.headhunting.utils;
+package net.stevenrafferty.masks.utils;
 
 import de.tr7zw.nbtapi.NBTItem;
-import net.stevenrafferty.headhunting.Main;
-import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
+import net.stevenrafferty.masks.Main;
 import org.bukkit.Material;
-import org.bukkit.entity.Creature;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -38,7 +35,7 @@ public class ItemStacks {
         return nbti.getItem();
     }
 
-    public ItemStack maskItemStack(String creature, String tier, boolean hasLore) {
+    public ItemStack maskItemStack(String creature, int tier, boolean hasLore) {
         String name = helper.getConfigMessage("creatures." + creature + ".masks.name");
         String loreTier = helper.getConfigMessage("creatures." + creature + ".masks." + tier + ".name");
 
@@ -51,7 +48,7 @@ public class ItemStacks {
         ItemStack helmet = new ItemStack(Material.DIAMOND_HELMET, 1);
         NBTItem nbti = new NBTItem(helmet);
         nbti.setString("creature", creature);
-        nbti.setString("tier", tier);
+        nbti.setInteger("tier", tier);
         ItemMeta helmetMeta = nbti.getItem().getItemMeta();
         helmetMeta.setDisplayName(name);
 

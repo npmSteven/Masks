@@ -1,10 +1,10 @@
-package net.stevenrafferty.headhunting.events;
+package net.stevenrafferty.masks.events;
 
 import de.tr7zw.nbtapi.NBTItem;
 import net.milkbowl.vault.economy.Economy;
-import net.stevenrafferty.headhunting.Main;
-import net.stevenrafferty.headhunting.utils.Helper;
-import net.stevenrafferty.headhunting.utils.ItemStacks;
+import net.stevenrafferty.masks.Main;
+import net.stevenrafferty.masks.utils.Helper;
+import net.stevenrafferty.masks.utils.ItemStacks;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -52,7 +52,7 @@ public class MaskInventory implements Listener {
 
             NBTItem nbti = new NBTItem(item);
             String creature = nbti.getString("creature");
-            String tier = nbti.getString("tier");
+            int tier = nbti.getInteger("tier");
 
             ItemStack token = itemStacks.tokenItemStack(creature, false);
             ItemStack mask = itemStacks.maskItemStack(creature, tier, false);

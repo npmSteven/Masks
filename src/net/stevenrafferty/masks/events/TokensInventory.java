@@ -1,11 +1,11 @@
-package net.stevenrafferty.headhunting.events;
+package net.stevenrafferty.masks.events;
 
 import de.tr7zw.nbtapi.NBTItem;
-import net.stevenrafferty.headhunting.Main;
-import net.stevenrafferty.headhunting.handlers.Experience;
-import net.stevenrafferty.headhunting.utils.Database;
-import net.stevenrafferty.headhunting.utils.Helper;
-import net.stevenrafferty.headhunting.utils.ItemStacks;
+import net.stevenrafferty.masks.Main;
+import net.stevenrafferty.masks.handlers.Experience;
+import net.stevenrafferty.masks.utils.Database;
+import net.stevenrafferty.masks.utils.Helper;
+import net.stevenrafferty.masks.utils.ItemStacks;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,11 +13,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.Plugin;
-
-import java.util.List;
 
 public class TokensInventory implements Listener {
 
@@ -77,9 +74,11 @@ public class TokensInventory implements Listener {
                         experience.changePlayerExp(player, xpRequiredLevel);
 
                         // Remove Souls
-                        int souls = database.getSouls(player);
-                        int newSouls = souls - soulsRequired;
-                        database.updateSouls(player, newSouls);
+                        if (soulsRequired > 0) {
+                            int souls = database.getSouls(player);
+                            int newSouls = souls - soulsRequired;
+                            database.updateSouls(player, newSouls);
+                        }
 
                         player.sendMessage(giveTokenMessage);
                         playerInventory.addItem(itemStacks.tokenItemStack(creature, false));

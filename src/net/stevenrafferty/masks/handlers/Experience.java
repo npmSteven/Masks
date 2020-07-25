@@ -1,4 +1,4 @@
-package net.stevenrafferty.headhunting.handlers;
+package net.stevenrafferty.masks.handlers;
 
 import org.bukkit.entity.Player;
 

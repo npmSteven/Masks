@@ -1,10 +1,10 @@
-package net.stevenrafferty.headhunting.events;
+package net.stevenrafferty.masks.events;
 
 import de.tr7zw.nbtapi.NBTItem;
 import net.milkbowl.vault.economy.Economy;
-import net.stevenrafferty.headhunting.Main;
-import net.stevenrafferty.headhunting.utils.Helper;
-import net.stevenrafferty.headhunting.utils.ItemStacks;
+import net.stevenrafferty.masks.Main;
+import net.stevenrafferty.masks.utils.Helper;
+import net.stevenrafferty.masks.utils.ItemStacks;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -38,39 +38,45 @@ public class UpgradeInventory implements Listener {
         Player player = (Player) event.getWhoClicked();
 
         Inventory clickedInventory = event.getClickedInventory();
-        ItemStack item = event.getCurrentItem();
-        if (player.getOpenInventory().getTitle().equals(upgradeInventoryName)) {
+
+        ItemStack currentItem = event.getCurrentItem();
+
+        // Check if the upgradeInventory is open and cancel the event
+        if (event.getView().getTitle().equals(upgradeInventoryName)) {
             event.setCancelled(true);
         }
-        if (clickedInventory == null || item == null || !item.hasItemMeta() || item.getType().equals(Material.AIR)) {
+
+        // Validate that clickedInventory or currentItem exist
+        if (clickedInventory == null || currentItem == null || !currentItem.hasItemMeta() || currentItem.getType().equals(Material.AIR)) {
             return;
         }
 
-        // Check if player clicked there inventory
-        if (clickedInventory.getType() == InventoryType.PLAYER && player.getOpenInventory().getTitle().equals(upgradeInventoryName)) {
+        // Check if the inventory clicked is a players inventory and that the upgradeInventory is open
+        if (clickedInventory.getType() == InventoryType.PLAYER && event.getView().getTitle().equals(upgradeInventoryName)) {
             ItemStack mask = player.getOpenInventory().getItem(4);
 
-            // Check if player has clicked a mask
-            if (isMask(item) && mask == null) {
-
+            if (isMask(currentItem) && mask == null) {
                 // add mask to menu
-                player.getOpenInventory().setItem(4, item);
-                clickedInventory.removeItem(item);
+                player.getOpenInventory().setItem(4, currentItem);
+                clickedInventory.removeItem(currentItem);
 
-                // Get item data
-                NBTItem nbti = new NBTItem(item);
+                // Get item details
+                NBTItem nbti = new NBTItem(currentItem);
                 String creature = nbti.getString("creature");
-                String tier = nbti.getString("tier");
+                int tier = nbti.getInteger("tier");
 
                 updateRequirements(tier, creature, event);
             }
         } else if (event.getView().getTitle().equals(upgradeInventoryName)) {
-            ItemStack mask = clickedInventory.getItem(4);
-            // Check if player has click a mask
-            if (mask != null) {
-                clickedInventory.removeItem(mask);
-                player.getInventory().addItem(mask);
+            // Upgrade inventory click
 
+            // Check that the clicked item is a mask
+            if (isMask(currentItem)) {
+                // remove mask from menu
+                clickedInventory.removeItem(currentItem);
+                player.getInventory().addItem(currentItem);
+
+                // reset requirements
                 String upgradeText = helper.getConfigMessage("options.upgrade_inventory");
 
                 List<String> lore = new ArrayList<>();
@@ -81,28 +87,24 @@ public class UpgradeInventory implements Listener {
             }
         }
 
-
         if (event.getView().getTitle().equals(upgradeInventoryName)) {
             String closeInventory = helper.getConfigMessage("options.close_inventory");
             String upgradeInventory = helper.getConfigMessage("options.upgrade_inventory");
 
             // Upgrade
-            ItemStack foundItemUpgrade = findItemStack(item, upgradeInventory);
+            ItemStack foundItemUpgrade = findItemStack(currentItem, upgradeInventory);
 
             if (foundItemUpgrade != null) {
                 // Check if helmet is there
                 ItemStack helmet = clickedInventory.getItem(4);
                 if (isMask(helmet)) {
-                    ItemMeta helmetMeta = helmet.getItemMeta();
-
-                    // Get item data
+                    // Get item details
                     NBTItem nbti = new NBTItem(helmet);
                     String creature = nbti.getString("creature");
-                    String tier = nbti.getString("tier");
+                    int tier = nbti.getInteger("tier");
 
                     // Update to next tier for info
-                    int nextTier = Integer.parseInt(tier);
-                    nextTier = nextTier + 1;
+                    int nextTier = tier + 1;
 
                     String tierPath = "creatures." + creature + ".masks." + nextTier;
                     String tierName = helper.getConfigMessage(tierPath + ".name");
@@ -127,20 +129,20 @@ public class UpgradeInventory implements Listener {
                                 economy.withdrawPlayer(offlinePlayer, moneyRequired);
 
                                 // Update mask with new tier
-                                List<String> lore = new ArrayList<>();
-                                lore.add(0, tierName);
-                                helmetMeta.setLore(lore);
-                                helmet.setItemMeta(helmetMeta);
+                                clickedInventory.removeItem(nbti.getItem());
+                                ItemStack upgradedMask = new ItemStacks().maskItemStack(creature, nextTier, false);
+                                upgradedMask.addEnchantments(nbti.getItem().getEnchantments());
+                                clickedInventory.setItem(4, upgradedMask);
 
                                 // Play sound
                                 player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 0);
 
                                 // Send message to player
-                                String upgradedMask = helper.getConfigMessage("messages.upgraded_mask");
-                                player.sendMessage(upgradedMask);
+                                String upgradedMaskMessage = helper.getConfigMessage("messages.upgraded_mask");
+                                player.sendMessage(upgradedMaskMessage);
 
                                 // Update requirements
-                                updateRequirements(Integer.toString(nextTier), creature, event);
+                                updateRequirements(nextTier, creature, event);
                             }
                         }
 
@@ -155,7 +157,7 @@ public class UpgradeInventory implements Listener {
             }
 
             // Close
-            ItemStack foundItemClose = findItemStack(item, closeInventory);
+            ItemStack foundItemClose = findItemStack(currentItem, closeInventory);
 
             if (foundItemClose != null && player.getOpenInventory().getTitle().equals(upgradeInventoryName)) {
                 ItemStack helmet = clickedInventory.getItem(4);
@@ -166,42 +168,45 @@ public class UpgradeInventory implements Listener {
                 player.getOpenInventory().close();
             }
         }
+
     }
 
-    @EventHandler
-    public void onInventoryClose(InventoryCloseEvent event) {
-        Inventory closedInventory = event.getInventory();
-        Player player = (Player) event.getPlayer();
-        if (event.getView().getTitle().equals(upgradeInventoryName)) {
-            ItemStack helmet = closedInventory.getItem(4);
-            if (isMask(helmet)) {
-                Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        player.openInventory(closedInventory);
-                    }
-                }, 1L);
-            }
-        }
-    }
+    public void updateRequirements(int tier, String creature, InventoryClickEvent event) {
+        int nextTier = tier + 1;
 
-    public boolean isMask(ItemStack helmet) {
-        boolean isMask = false;
-        if (helmet != null) {
-            if (helmet.hasItemMeta()) {
-                ItemMeta helmetMeta = helmet.getItemMeta();
-                if (helmetMeta.hasDisplayName() && helmetMeta.hasLore()) {
-                    // Get item data
-                    NBTItem nbti = new NBTItem(helmet);
-                    String creature = nbti.getString("creature");
-                    String tier = nbti.getString("tier");
-                    if (creature != null && tier != null) {
-                        isMask = true;
-                    }
-                }
-            }
+        String tierPath = "creatures." + creature + ".masks." + nextTier;
+        String tierName = helper.getConfigMessage(tierPath + ".name");
+
+        if (tierName != null) {
+            String nextTierName = helper.getConfigMessage("creatures." + creature + ".masks." + nextTier + ".name");
+
+            int tokensRequired = plugin.getConfig().getInt("creatures." + creature + ".masks." + nextTier + ".token.required");
+            String tokenName = helper.getConfigMessage("creatures." + creature + ".masks." + nextTier + ".token.name");
+
+            int moneyRequired = plugin.getConfig().getInt("creatures." + creature + ".masks." + nextTier + ".money.required");
+            String moneyName = helper.getConfigMessage("creatures." + creature + ".masks." + nextTier + ".money.name");
+
+            List<String> lore = new ArrayList<>();
+            lore.add(nextTierName);
+            lore.add(tokenName + tokensRequired);
+            lore.add(moneyName + moneyRequired);
+
+            String upgradeText = helper.getConfigMessage("options.upgrade_inventory");
+
+            ItemStack upgrade = findLoopedItemStack(event.getInventory().getContents(), upgradeText);
+            ItemMeta upgradeMeta = upgrade.getItemMeta();
+            upgradeMeta.setLore(lore);
+            upgrade.setItemMeta(upgradeMeta);
+        } else {
+            String upgradeText = helper.getConfigMessage("options.upgrade_inventory");
+
+            List<String> lore = new ArrayList<>();
+            lore.add(helper.getConfigMessage("options.max_tier"));
+            ItemStack upgrade = findLoopedItemStack(event.getInventory().getContents(), upgradeText);
+            ItemMeta upgradeMeta = upgrade.getItemMeta();
+            upgradeMeta.setLore(lore);
+            upgrade.setItemMeta(upgradeMeta);
         }
-        return isMask;
     }
 
     public ItemStack findItemStack(ItemStack item, String name) {
@@ -234,39 +239,33 @@ public class UpgradeInventory implements Listener {
         return foundItem;
     }
 
-    public void updateRequirements(String tier, String creature, InventoryClickEvent event) {
-        int nextTier = Integer.parseInt(tier);
-        nextTier = nextTier + 1;
+    public boolean isMask(ItemStack mask) {
+        boolean isMask = false;
+        if (mask != null && mask.hasItemMeta() && mask.getType() != Material.AIR) {
+            NBTItem nbti = new NBTItem(mask);
+            String creature = nbti.getString("creature");
+            int tier = nbti.getInteger("tier");
+            if (creature != null && tier > 0) {
+                isMask = true;
+            }
+        }
+        return isMask;
+    }
 
-        String tierPath = "creatures." + creature + ".masks." + nextTier;
-        String tierName = helper.getConfigMessage(tierPath + ".name");
-
-        if (tierName != null) {
-            int tokensRequired = plugin.getConfig().getInt("creatures." + creature + ".masks." + nextTier + ".token.required");
-            String tokenName = helper.getConfigMessage("creatures." + creature + ".masks." + nextTier + ".token.name");
-
-            int moneyRequired = plugin.getConfig().getInt("creatures." + creature + ".masks." + nextTier + ".money.required");
-            String moneyName = helper.getConfigMessage("creatures." + creature + ".masks." + nextTier + ".money.name");
-
-            List<String> lore = new ArrayList<>();
-            lore.add(tokenName + tokensRequired);
-            lore.add(moneyName + moneyRequired);
-
-            String upgradeText = helper.getConfigMessage("options.upgrade_inventory");
-
-            ItemStack upgrade = findLoopedItemStack(event.getInventory().getContents(), upgradeText);
-            ItemMeta upgradeMeta = upgrade.getItemMeta();
-            upgradeMeta.setLore(lore);
-            upgrade.setItemMeta(upgradeMeta);
-        } else {
-            String upgradeText = helper.getConfigMessage("options.upgrade_inventory");
-
-            List<String> lore = new ArrayList<>();
-            lore.add(helper.getConfigMessage("options.max_tier"));
-            ItemStack upgrade = findLoopedItemStack(event.getInventory().getContents(), upgradeText);
-            ItemMeta upgradeMeta = upgrade.getItemMeta();
-            upgradeMeta.setLore(lore);
-            upgrade.setItemMeta(upgradeMeta);
+    @EventHandler
+    public void onInventoryClose(InventoryCloseEvent event) {
+        Inventory closedInventory = event.getInventory();
+        Player player = (Player) event.getPlayer();
+        if (event.getView().getTitle().equals(upgradeInventoryName)) {
+            ItemStack helmet = closedInventory.getItem(4);
+            if (isMask(helmet)) {
+                Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        player.openInventory(closedInventory);
+                    }
+                }, 1L);
+            }
         }
     }
 
@@ -297,7 +296,7 @@ public class UpgradeInventory implements Listener {
             if (content != null && content.hasItemMeta() && content.getType().equals(Material.NETHER_STAR)) {
                 ItemMeta contentMeta = content.getItemMeta();
                 if (contentMeta.hasDisplayName()) {
-                    if (contentMeta.getDisplayName().equals(tokenMeta.getDisplayName()) && contentMeta.hasLore()) {
+                    if (contentMeta.getDisplayName().equals(tokenMeta.getDisplayName())) {
                         tokenAmount += content.getAmount();
                     }
                 }
@@ -315,5 +314,6 @@ public class UpgradeInventory implements Listener {
             return false;
         }
     }
+
 
 }

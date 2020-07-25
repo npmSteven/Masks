@@ -1,10 +1,10 @@
-package net.stevenrafferty.headhunting;
+package net.stevenrafferty.masks;
 
 import net.milkbowl.vault.economy.Economy;
-import net.stevenrafferty.headhunting.commands.*;
-import net.stevenrafferty.headhunting.events.*;
-import net.stevenrafferty.headhunting.utils.Database;
-import net.stevenrafferty.headhunting.utils.Helper;
+import net.stevenrafferty.masks.commands.*;
+import net.stevenrafferty.masks.events.*;
+import net.stevenrafferty.masks.utils.Database;
+import net.stevenrafferty.masks.utils.Helper;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.plugin.RegisteredServiceProvider;

@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.stevenrafferty</groupId>
-    <artifactId>headhunting</artifactId>
+    <artifactId>masks</artifactId>
     <version>0.0.13</version>
 
     <repositories>

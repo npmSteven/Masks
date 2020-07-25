@@ -1,6 +1,6 @@
-package net.stevenrafferty.headhunting.events;
+package net.stevenrafferty.masks.events;
 
-import net.stevenrafferty.headhunting.utils.Database;
+import net.stevenrafferty.masks.utils.Database;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
