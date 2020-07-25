@@ -1,4 +1,4 @@
-# Head Hunting
+# Masks
 
 ## Plugin details
 * Name: Head Hunting
@@ -32,6 +32,6 @@
 4. Start server up and done
 
 ## Build details
-* Built with spigot-1.8
+* Built with spigot-1.16.1
 * Coded with IntelliJ 2020
 * Java 1.8
