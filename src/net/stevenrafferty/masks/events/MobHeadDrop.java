@@ -1,16 +1,13 @@
-package net.stevenrafferty.headhunting.events;
+package net.stevenrafferty.masks.events;
 
-import net.stevenrafferty.headhunting.Main;
-import net.stevenrafferty.headhunting.utils.ItemStacks;
-import net.stevenrafferty.headhunting.utils.MobHeads;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
+import net.stevenrafferty.masks.Main;
+import net.stevenrafferty.masks.utils.ItemStacks;
+import net.stevenrafferty.masks.utils.MobHeads;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Random;
@@ -38,7 +35,7 @@ public class MobHeadDrop implements Listener {
 
         // Check if the user has the permission to use this event
         if (player.hasPermission(mob_head_drops)) {
-          System.out.print(killed.getName());
+
           // Check if we should drop the mob head
           if (shouldDropMobHead(killed.getType())) {
 

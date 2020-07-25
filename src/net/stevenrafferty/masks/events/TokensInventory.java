@@ -1,10 +1,11 @@
-package net.stevenrafferty.headhunting.events;
+package net.stevenrafferty.masks.events;
 
-import net.stevenrafferty.headhunting.Main;
-import net.stevenrafferty.headhunting.handlers.Experience;
-import net.stevenrafferty.headhunting.utils.Database;
-import net.stevenrafferty.headhunting.utils.Helper;
-import net.stevenrafferty.headhunting.utils.ItemStacks;
+import de.tr7zw.nbtapi.NBTItem;
+import net.stevenrafferty.masks.Main;
+import net.stevenrafferty.masks.handlers.Experience;
+import net.stevenrafferty.masks.utils.Database;
+import net.stevenrafferty.masks.utils.Helper;
+import net.stevenrafferty.masks.utils.ItemStacks;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,11 +13,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.Plugin;
-
-import java.util.List;
 
 public class TokensInventory implements Listener {
 
@@ -42,15 +40,15 @@ public class TokensInventory implements Listener {
             event.setCancelled(true);
         }
 
-        if (clickedInventory.getName().equals(tokenInventoryName)) {
+        if (event.getView().getTitle().equals(tokenInventoryName)) {
             if (item == null || !item.hasItemMeta() || item.getType().equals(Material.AIR)) {
                 return;
             }
             Inventory playerInventory = player.getInventory();
-            ItemMeta itemMeta = item.getItemMeta();
 
-            // Get the creature from the item data
-            String creature = helper.convertToVisibleString(itemMeta.getLore().get(0));
+            // Get item data
+            NBTItem nbti = new NBTItem(item);
+            String creature = nbti.getString("creature");
 
             ItemStack skull = itemStacks.skullItemStack(creature);
 
@@ -76,9 +74,11 @@ public class TokensInventory implements Listener {
                         experience.changePlayerExp(player, xpRequiredLevel);
 
                         // Remove Souls
-                        int souls = database.getSouls(player);
-                        int newSouls = souls - soulsRequired;
-                        database.updateSouls(player, newSouls);
+                        if (soulsRequired > 0) {
+                            int souls = database.getSouls(player);
+                            int newSouls = souls - soulsRequired;
+                            database.updateSouls(player, newSouls);
+                        }
 
                         player.sendMessage(giveTokenMessage);
                         playerInventory.addItem(itemStacks.tokenItemStack(creature, false));
@@ -90,9 +90,11 @@ public class TokensInventory implements Listener {
 
     public boolean checkPlayerHasEnoughHeads(ItemStack item, Player player) {
         Inventory playerInventory = player.getInventory();
-        ItemMeta itemMeta = item.getItemMeta();
 
-        String creature = helper.convertToVisibleString(itemMeta.getLore().get(0));
+        // Get item data
+        NBTItem nbti = new NBTItem(item);
+        String creature = nbti.getString("creature");
+
         ItemStack skull = itemStacks.skullItemStack(creature);
         SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
         ItemStack[] contents = playerInventory.getContents();
@@ -104,7 +106,7 @@ public class TokensInventory implements Listener {
         int skullAmount = 0;
         for (int i = 0; i < contents.length; i++) {
             ItemStack content = contents[i];
-            if (content != null && content.hasItemMeta() && content.getType().equals(Material.SKULL_ITEM)) {
+            if (content != null && content.hasItemMeta() && content.getType().equals(Material.PLAYER_HEAD)) {
                 SkullMeta contentMeta = (SkullMeta) content.getItemMeta();
                 if (contentMeta.hasDisplayName()) {
                     if (contentMeta.getDisplayName().equals(skullMeta.getDisplayName()) && contentMeta.getOwner().equals(skullMeta.getOwner())) {
@@ -141,8 +143,13 @@ public class TokensInventory implements Listener {
     }
 
     public boolean checkPlayerHasEnoughSouls(Player player, int soulsRequired) {
+        if (soulsRequired == 0) {
+            return true;
+        }
+
         String notEnoughSouls = helper.getConfigMessage("messages.not_enough_souls");
         String noSouls = helper.getConfigMessage("messages.no_souls");
+
         boolean hasEnoughSouls = false;
         if (database.hasPlayer(player)) {
             int souls = database.getSouls(player);

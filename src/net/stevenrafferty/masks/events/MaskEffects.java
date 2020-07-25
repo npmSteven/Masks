@@ -1,8 +1,9 @@
-package net.stevenrafferty.headhunting.events;
+package net.stevenrafferty.masks.events;
 
 import com.codingforcookies.armorequip.ArmorEquipEvent;
-import net.stevenrafferty.headhunting.Main;
-import net.stevenrafferty.headhunting.utils.Helper;
+import de.tr7zw.nbtapi.NBTItem;
+import net.stevenrafferty.masks.Main;
+import net.stevenrafferty.masks.utils.Helper;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,7 +14,6 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.List;
 import java.util.Set;
 
 public class MaskEffects implements Listener {
@@ -35,12 +35,12 @@ public class MaskEffects implements Listener {
                 if (previousItemMeta.hasLore()) {
 
                     // Get item data
-                    String[] creatureLore = helper.getItemMetaInfo(previousItemMeta);
-                    String creature = creatureLore[0];
-                    String tier = creatureLore[1];
+                    NBTItem nbti = new NBTItem(previousItem);
+                    String creature = nbti.getString("creature");
+                    int tier = nbti.getInteger("tier");
 
                     // Check if item data exists
-                    if (creature != null && tier != null) {
+                    if (creature != null && tier > 0) {
 
                         // Get all of the available effects from config.yml
                         String effectsPath = "creatures." + creature + ".masks." + tier + ".effects";
@@ -73,12 +73,12 @@ public class MaskEffects implements Listener {
                 if (itemMeta.hasLore()) {
 
                     // Get item data
-                    String[] creatureLore = helper.getItemMetaInfo(itemMeta);
-                    String creature = creatureLore[0];
-                    String tier = creatureLore[1];
+                    NBTItem nbti = new NBTItem(currentItem);
+                    String creature = nbti.getString("creature");
+                    int tier = nbti.getInteger("tier");
 
                     // Check if item data exists
-                    if (creature != null && tier != null) {
+                    if (creature != null && tier > 0) {
 
                         // Get all of the available effects from config.yml
                         String effectsPath = "creatures." + creature + ".masks." + tier + ".effects";

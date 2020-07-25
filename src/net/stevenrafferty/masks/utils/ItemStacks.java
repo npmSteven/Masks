@@ -1,10 +1,8 @@
-package net.stevenrafferty.headhunting.utils;
+package net.stevenrafferty.masks.utils;
 
-import net.stevenrafferty.headhunting.Main;
-import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
+import de.tr7zw.nbtapi.NBTItem;
+import net.stevenrafferty.masks.Main;
 import org.bukkit.Material;
-import org.bukkit.entity.Creature;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -26,20 +24,18 @@ public class ItemStacks {
         String type = plugin.getConfig().getString("creatures." + creature + ".head.type");
         int amount = plugin.getConfig().getInt("creatures." + creature + ".head.drop_amount");
 
-        ItemStack skull = new ItemStack(Material.SKULL_ITEM, amount, (short) 3);
-        SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
+        ItemStack skull = new ItemStack(Material.LEGACY_SKULL_ITEM, amount, (short) 3);
+        NBTItem nbti = new NBTItem(skull);
+        nbti.setString("creature", creature);
+        SkullMeta skullMeta = (SkullMeta) nbti.getItem().getItemMeta();
         skullMeta.setOwner(type);
         skullMeta.setDisplayName(name);
-
-        List<String> lore = new ArrayList<>();
-        lore.add(helper.convertToInvisibleString(creature));
-        skullMeta.setLore(lore);
         skullMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        skull.setItemMeta(skullMeta);
-        return skull;
+        nbti.getItem().setItemMeta(skullMeta);
+        return nbti.getItem();
     }
 
-    public ItemStack maskItemStack(String creature, String tier, boolean hasLore) {
+    public ItemStack maskItemStack(String creature, int tier, boolean hasLore) {
         String name = helper.getConfigMessage("creatures." + creature + ".masks.name");
         String loreTier = helper.getConfigMessage("creatures." + creature + ".masks." + tier + ".name");
 
@@ -50,20 +46,26 @@ public class ItemStacks {
         String moneyName = helper.getConfigMessage("creatures." + creature + ".masks." + tier + ".money.name");
 
         ItemStack helmet = new ItemStack(Material.DIAMOND_HELMET, 1);
-        ItemMeta helmetMeta = helmet.getItemMeta();
+        NBTItem nbti = new NBTItem(helmet);
+        nbti.setString("creature", creature);
+        nbti.setInteger("tier", tier);
+        ItemMeta helmetMeta = nbti.getItem().getItemMeta();
         helmetMeta.setDisplayName(name);
 
         List<String> lore = new ArrayList<>();
-        lore.add(helper.convertToInvisibleString(creature + "-" + tier));
         lore.add(loreTier);
         if (hasLore) {
-            lore.add(tokenName + tokensRequired);
-            lore.add(moneyName + moneyRequired);
+            if (tokensRequired > 0) {
+                lore.add(tokenName + tokensRequired);
+            }
+            if (moneyRequired > 0) {
+                lore.add(moneyName + moneyRequired);
+            }
         }
         helmetMeta.setLore(lore);
         helmetMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        helmet.setItemMeta(helmetMeta);
-        return helmet;
+        nbti.getItem().setItemMeta(helmetMeta);
+        return nbti.getItem();
     }
 
     public ItemStack tokenItemStack(String creature, boolean hasLore) {
@@ -81,29 +83,35 @@ public class ItemStacks {
         int soulsRequired = plugin.getConfig().getInt(tokenPath + "souls.required");
 
         ItemStack token = new ItemStack(Material.NETHER_STAR, 1);
-        ItemMeta tokenMeta = token.getItemMeta();
+        NBTItem nbti = new NBTItem(token);
+        nbti.setString("creature", creature);
+        ItemMeta tokenMeta = nbti.getItem().getItemMeta();
         tokenMeta.setDisplayName(name);
 
         List<String> lore = new ArrayList<>();
-        lore.add(helper.convertToInvisibleString(creature));
-
         if (hasLore) {
-            lore.add(headsText + headsRequired);
-            lore.add(xpText + xpRequired);
-            lore.add(soulsText + soulsRequired);
+            if (headsRequired > 0) {
+                lore.add(headsText + headsRequired);
+            }
+            if (xpRequired > 0) {
+                lore.add(xpText + xpRequired);
+            }
+            if (soulsRequired > 0) {
+                lore.add(soulsText + soulsRequired);
+            }
         }
         tokenMeta.setLore(lore);
 
         tokenMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        token.setItemMeta(tokenMeta);
+        nbti.getItem().setItemMeta(tokenMeta);
 
-        return token;
+        return nbti.getItem();
     }
 
     public ItemStack upgradeItemStack() {
         String upgradeText = helper.getConfigMessage("options.upgrade_inventory");
 
-        ItemStack upgrade = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 13);
+        ItemStack upgrade = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, 1);
         ItemMeta upgradeMeta = upgrade.getItemMeta();
         upgradeMeta.setDisplayName(upgradeText);
         upgradeMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -112,7 +120,7 @@ public class ItemStacks {
     }
 
     public ItemStack emptyItemStack() {
-        ItemStack empty = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 7);
+        ItemStack empty = new ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1);
         ItemMeta emptyMeta = empty.getItemMeta();
         emptyMeta.setDisplayName(" ");
         emptyMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -123,7 +131,7 @@ public class ItemStacks {
     public ItemStack closeItemStack() {
         String close = helper.getConfigMessage("options.close_inventory");
 
-        ItemStack closeItem = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 14);
+        ItemStack closeItem = new ItemStack(Material.RED_STAINED_GLASS_PANE, 1);
         ItemMeta closeItemMeta = closeItem.getItemMeta();
         closeItemMeta.setDisplayName(close);
         closeItemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);

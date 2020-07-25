@@ -1,7 +1,6 @@
-package net.stevenrafferty.headhunting.utils;
+package net.stevenrafferty.masks.utils;
 
-import net.stevenrafferty.headhunting.Main;
-import org.bukkit.ChatColor;
+import net.stevenrafferty.masks.Main;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -16,23 +15,13 @@ public class Helper {
 
     private Plugin plugin = Main.getPlugin(Main.class);
 
-    public static String convertToInvisibleString(String s) {
-        String hidden = "";
-        for (char c : s.toCharArray()) hidden += ChatColor.COLOR_CHAR + "" + c;
-        return hidden;
-    }
-
-    public static String convertToVisibleString(String s) {
-        return s.replaceAll("§", "");
-    }
-
     public static void removeHeads(Inventory inventory, ItemStack head, int amount) {
         if (amount <= 0) return;
         int size = inventory.getSize();
         SkullMeta headMeta = (SkullMeta) head.getItemMeta();
         for (int slot = 0; slot < size; slot++) {
             ItemStack is = inventory.getItem(slot);
-            if (is == null || !is.getType().equals(Material.SKULL_ITEM)) continue;
+            if (is == null || !is.getType().equals(Material.PLAYER_HEAD)) continue;
             SkullMeta isMeta = (SkullMeta) is.getItemMeta();
             if (isMeta.hasDisplayName() && headMeta.hasDisplayName()) {
                 if (isMeta.getOwner().equals(headMeta.getOwner()) && isMeta.getDisplayName().equals(headMeta.getDisplayName())) {
@@ -59,7 +48,7 @@ public class Helper {
             if (is == null || !is.getType().equals(Material.NETHER_STAR)) continue;
             ItemMeta isMeta = is.getItemMeta();
             if (isMeta.hasDisplayName() && tokenMeta.hasDisplayName()) {
-                if (isMeta.getDisplayName().equals(tokenMeta.getDisplayName()) && isMeta.hasLore()) {
+                if (isMeta.getDisplayName().equals(tokenMeta.getDisplayName())) {
                     int newAmount = is.getAmount() - amount;
                     if (newAmount > 0) {
                         is.setAmount(newAmount);
@@ -93,12 +82,6 @@ public class Helper {
             return plugin.getConfig().getString(path).replaceAll("(&([a-f0-9]))", "\u00A7$2");
         }
         return null;
-    }
-
-    public String[] getItemMetaInfo(ItemMeta itemMeta) {
-        String firstLore = convertToVisibleString(itemMeta.getLore().get(0));
-        String[] creatureLore = firstLore.split("-");
-        return creatureLore;
     }
 
 }

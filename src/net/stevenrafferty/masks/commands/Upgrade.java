@@ -1,8 +1,8 @@
-package net.stevenrafferty.headhunting.commands;
+package net.stevenrafferty.masks.commands;
 
-import net.stevenrafferty.headhunting.Main;
-import net.stevenrafferty.headhunting.utils.Helper;
-import net.stevenrafferty.headhunting.utils.ItemStacks;
+import net.stevenrafferty.masks.Main;
+import net.stevenrafferty.masks.utils.Helper;
+import net.stevenrafferty.masks.utils.ItemStacks;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

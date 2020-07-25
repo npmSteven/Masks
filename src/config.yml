@@ -4,390 +4,322 @@ creatures:
     head:
       type: "MHF_Cow"
       name: "&2Cow's Head"
-      drop_probability: 100
+      drop_probability: 75
       drop_amount: 1
     token:
       name: "&2Cow Token"
       heads:
         text: "&2Heads Required: "
-        required: 400
+        required: 100
       xp:
         text: "&2XP Required: "
-        required: 25
+        required: 10
       souls:
         text: "&2Souls Required: "
-        required: 1
+        required: 0
     masks:
       name: "&2Cow Mask"
       1:
         name: "&2Tier: 1"
         token:
           name: "&2Cow Token: "
-          required: 1
+          required: 2
         money:
           name: "&2Money: "
-          required: 1000
+          required: 0
         effects:
           1:
-            effect: "SPEED"
-            amplifier: 0
-          2:
-            effect: "REGENERATION"
+            effect: "SATURATION"
             amplifier: 0
       2:
         name: "&2Tier: 2"
         token:
           name: "&2Cow Token: "
-          required: 2
+          required: 3
         money:
           name: "&2Money: "
-          required: 2000
+          required: 0
         effects:
           1:
-            effect: "SPEED"
+            effect: "SATURATION"
             amplifier: 0
           2:
-            effect: "REGENERATION"
+            effect: "DAMAGE_RESISTANCE"
             amplifier: 0
       3:
         name: "&2Tier: 3"
         token:
           name: "&2Cow Token: "
-          required: 3
+          required: 5
         money:
           name: "&2Money: "
-          required: 3000
+          required: 0
         effects:
           1:
-            effect: "SPEED"
+            effect: "SATURATION"
             amplifier: 0
           2:
-            effect: "REGENERATION"
+            effect: "DAMAGE_RESISTANCE"
             amplifier: 0
-  pig:
-    name: "Pig"
+          3:
+            effect: "INCREASE_DAMAGE"
+            amplifier: 0
+  cave_spider:
+    name: "&2Cave Spider"
     head:
-      type: "MHF_Pig"
-      name: "&2Pig's Head"
-      drop_probability: 100
+      type: "MHF_CaveSpider"
+      name: "&2Cave Spider's Head"
+      drop_probability: 65
       drop_amount: 1
     token:
-      name: "&2Pig Token"
+      name: "&2Cave Spider Token"
       heads:
         text: "&2Heads Required: "
-        required: 400
+        required: 150
       xp:
         text: "&2XP Required: "
-        required: 25
+        required: 15
       souls:
         text: "&2Souls Required: "
-        required: 1
+        required: 0
     masks:
-      name: "&2Pig Mask"
+      name: "&2Cave Spider Mask"
       1:
         name: "&2Tier: 1"
         token:
-          name: "&2Pig Token: "
-          required: 1
+          name: "&2Cave Spider Token: "
+          required: 2
         money:
           name: "&2Money: "
-          required: 1000
+          required: 0
         effects:
           1:
-            effect: "SPEED"
-            amplifier: 0
-          2:
-            effect: "REGENERATION"
+            effect: "NIGHT_VISION"
             amplifier: 0
       2:
         name: "&2Tier: 2"
         token:
-          name: "&2Pig Token: "
-          required: 2
+          name: "&2Cave Spider Token: "
+          required: 3
         money:
           name: "&2Money: "
-          required: 2000
+          required: 0
         effects:
           1:
-            effect: "SPEED"
+            effect: "NIGHT_VISION"
             amplifier: 0
           2:
-            effect: "REGENERATION"
+            effect: "SLOW_FALLING"
             amplifier: 0
       3:
         name: "&2Tier: 3"
         token:
-          name: "&2Pig Token: "
-          required: 3
+          name: "&2Cave Spider Token: "
+          required: 5
         money:
           name: "&2Money: "
-          required: 3000
+          required: 0
         effects:
           1:
-            effect: "SPEED"
+            effect: "NIGHT_VISION"
             amplifier: 0
           2:
-            effect: "REGENERATION"
+            effect: "SLOW_FALLING"
             amplifier: 0
-  iron_golem:
-    name: "Iron Golem"
-    head:
-      type: "MHF_Golem"
-      name: "&2Iron Golem's Head"
-      drop_probability: 100
-      drop_amount: 1
-    token:
-      name: "&2Iron Golem Token"
-      heads:
-        text: "&2Heads Required: "
-        required: 400
-      xp:
-        text: "&2XP Required: "
-        required: 25
-      souls:
-        text: "&2Souls Required: "
-        required: 1
-    masks:
-      name: "&2Iron Golem Mask"
-      1:
-        name: "&2Tier: 1"
-        token:
-          name: "&2Iron Golem Token: "
-          required: 1
-        money:
-          name: "&2Money: "
-          required: 1000
-        effects:
-          1:
-            effect: "SPEED"
-            amplifier: 0
-          2:
-            effect: "REGENERATION"
-            amplifier: 0
-      2:
-        name: "&2Tier: 2"
-        token:
-          name: "&2Iron Golem Token: "
-          required: 2
-        money:
-          name: "&2Money: "
-          required: 2000
-        effects:
-          1:
-            effect: "SPEED"
-            amplifier: 0
-          2:
-            effect: "REGENERATION"
-            amplifier: 0
-      3:
-        name: "&2Tier: 3"
-        token:
-          name: "&2Iron Golem Token: "
-          required: 3
-        money:
-          name: "&2Money: "
-          required: 3000
-        effects:
-          1:
-            effect: "SPEED"
-            amplifier: 0
-          2:
-            effect: "REGENERATION"
+          3:
+            effect: "JUMP"
             amplifier: 0
   skeleton:
-    name: "Skeleton"
+    name: "&2Skeleton"
     head:
       type: "MHF_Skeleton"
       name: "&2Skeleton's Head"
-      drop_probability: 100
+      drop_probability: 50
       drop_amount: 1
     token:
       name: "&2Skeleton Token"
       heads:
         text: "&2Heads Required: "
-        required: 400
+        required: 125
       xp:
         text: "&2XP Required: "
-        required: 25
+        required: 20
       souls:
         text: "&2Souls Required: "
-        required: 1
+        required: 0
     masks:
       name: "&2Skeleton Mask"
       1:
         name: "&2Tier: 1"
         token:
-          name: "&2Skeleton Token: "
-          required: 1
+          name: "&2Blaze Token: "
+          required: 2
         money:
           name: "&2Money: "
-          required: 1000
+          required: 0
         effects:
           1:
-            effect: "SPEED"
-            amplifier: 0
-          2:
-            effect: "REGENERATION"
+            effect: "NIGHT_VISION"
             amplifier: 0
       2:
         name: "&2Tier: 2"
         token:
-          name: "&2Skeleton Token: "
-          required: 2
+          name: "&2Blaze Token: "
+          required: 3
         money:
           name: "&2Money: "
-          required: 2000
+          required: 0
         effects:
           1:
-            effect: "SPEED"
+            effect: "NIGHT_VISION"
             amplifier: 0
           2:
-            effect: "REGENERATION"
+            effect: "FAST_DIGGING"
             amplifier: 0
       3:
         name: "&2Tier: 3"
         token:
           name: "&2Skeleton Token: "
-          required: 3
+          required: 5
         money:
           name: "&2Money: "
-          required: 3000
+          required: 0
         effects:
           1:
-            effect: "SPEED"
+            effect: "NIGHT_VISION"
             amplifier: 0
           2:
-            effect: "REGENERATION"
-            amplifier: 0
+            effect: "FAST_DIGGING"
+            amplifier: 1
   zombie:
-    name: "Zombie"
+    name: "&2Zombie"
     head:
       type: "MHF_Zombie"
       name: "&2Zombie's Head"
-      drop_probability: 100
+      drop_probability: 50
       drop_amount: 1
     token:
       name: "&2Zombie Token"
       heads:
         text: "&2Heads Required: "
-        required: 400
+        required: 125
       xp:
         text: "&2XP Required: "
-        required: 25
+        required: 20
       souls:
         text: "&2Souls Required: "
-        required: 1
+        required: 0
     masks:
       name: "&2Zombie Mask"
       1:
         name: "&2Tier: 1"
         token:
           name: "&2Zombie Token: "
-          required: 1
+          required: 2
         money:
           name: "&2Money: "
-          required: 1000
+          required: 0
         effects:
           1:
-            effect: "SPEED"
-            amplifier: 0
-          2:
-            effect: "REGENERATION"
+            effect: "WATER_BREATHING"
             amplifier: 0
       2:
         name: "&2Tier: 2"
         token:
           name: "&2Zombie Token: "
-          required: 2
+          required: 3
         money:
           name: "&2Money: "
-          required: 2000
+          required: 0
         effects:
           1:
-            effect: "SPEED"
+            effect: "WATER_BREATHING"
             amplifier: 0
           2:
-            effect: "REGENERATION"
+            effect: "DOLPHINS_GRACE"
             amplifier: 0
       3:
         name: "&2Tier: 3"
         token:
           name: "&2Zombie Token: "
-          required: 3
+          required: 5
         money:
           name: "&2Money: "
-          required: 3000
+          required: 0
         effects:
           1:
-            effect: "SPEED"
+            effect: "WATER_BREATHING"
             amplifier: 0
           2:
-            effect: "REGENERATION"
+            effect: "DOLPHINS_GRACE"
+            amplifier: 0
+          3:
+            effect: "SPEED"
             amplifier: 0
   blaze:
     name: "&2Blaze"
     head:
       type: "MHF_Blaze"
       name: "&2Blaze's Head"
-      drop_probability: 100
+      drop_probability: 50
       drop_amount: 1
     token:
       name: "&2Blaze Token"
       heads:
         text: "&2Heads Required: "
-        required: 400
+        required: 125
       xp:
         text: "&2XP Required: "
-        required: 25
+        required: 20
       souls:
         text: "&2Souls Required: "
-        required: 1
+        required: 0
     masks:
       name: "&2Blaze Mask"
       1:
         name: "&2Tier: 1"
         token:
           name: "&2Blaze Token: "
-          required: 1
+          required: 2
         money:
           name: "&2Money: "
-          required: 1000
+          required: 0
         effects:
           1:
-            effect: "SPEED"
-            amplifier: 0
-          2:
-            effect: "REGENERATION"
+            effect: "SLOW_FALLING"
             amplifier: 0
       2:
         name: "&2Tier: 2"
         token:
           name: "&2Blaze Token: "
-          required: 2
+          required: 3
         money:
           name: "&2Money: "
-          required: 2000
+          required: 0
         effects:
           1:
-            effect: "SPEED"
+            effect: "SLOW_FALLING"
             amplifier: 0
           2:
-            effect: "REGENERATION"
+            effect: "FIRE_RESISTANCE"
             amplifier: 0
       3:
         name: "&2Tier: 3"
         token:
           name: "&2Blaze Token: "
-          required: 3
+          required: 5
         money:
           name: "&2Money: "
-          required: 3000
+          required: 0
         effects:
           1:
-            effect: "SPEED"
+            effect: "SLOW_FALLING"
             amplifier: 0
           2:
-            effect: "REGENERATION"
+            effect: "FIRE_RESISTANCE"
+            amplifier: 0
+          3:
+            effect: "DAMAGE_RESISTANCE"
             amplifier: 0
 permissions:
   mob_head_drops: "headhunting.mob_head_drops"
@@ -426,6 +358,6 @@ options:
 database:
   host: "localhost"
   port: 3306
-  database: ""
-  username: ""
+  database: "headhunting"
+  username: "root"
   password: ""

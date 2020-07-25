@@ -1,8 +1,8 @@
-package net.stevenrafferty.headhunting.commands;
+package net.stevenrafferty.masks.commands;
 
-import net.stevenrafferty.headhunting.Main;
-import net.stevenrafferty.headhunting.utils.Helper;
-import net.stevenrafferty.headhunting.utils.ItemStacks;
+import net.stevenrafferty.masks.Main;
+import net.stevenrafferty.masks.utils.Helper;
+import net.stevenrafferty.masks.utils.ItemStacks;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -35,13 +35,13 @@ public class Mask implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (player.hasPermission(masksPermission)) {
-                Inventory inventory = plugin.getServer().createInventory(null, 9, maskInventoryName);
+                Inventory inventory = plugin.getServer().createInventory(null, 18, maskInventoryName);
 
                 int index = 0;
                 for (Object key : creatures) {
                     String creature = key.toString();
 
-                    ItemStack token = itemStacks.maskItemStack(creature, "1", true);
+                    ItemStack token = itemStacks.maskItemStack(creature, 1, true);
                     inventory.setItem(index, token);
                     index++;
                 }

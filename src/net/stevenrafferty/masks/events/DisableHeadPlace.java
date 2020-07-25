@@ -1,4 +1,4 @@
-package net.stevenrafferty.headhunting.events;
+package net.stevenrafferty.masks.events;
 
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -9,7 +9,7 @@ public class DisableHeadPlace implements Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
-        if (event.getBlock().getType() == Material.SKULL) {
+        if (event.getBlock().getType() == Material.PLAYER_HEAD) {
             event.setCancelled(true);
         }
     }

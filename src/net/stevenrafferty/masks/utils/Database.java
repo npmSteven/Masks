@@ -1,6 +1,6 @@
-package net.stevenrafferty.headhunting.utils;
+package net.stevenrafferty.masks.utils;
 
-import net.stevenrafferty.headhunting.Main;
+import net.stevenrafferty.masks.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
