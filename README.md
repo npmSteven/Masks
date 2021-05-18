@@ -1,7 +1,7 @@
 # Masks
 
 ## Plugin details
-* Name: Head Hunting
+* Name: Masks
 * Author: Steven Rafferty
 * Description: A plugin that enables you to collect mob heads to obtain masks
 
